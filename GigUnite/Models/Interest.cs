@@ -9,6 +9,7 @@ namespace GigUnite.Models
 	public class Interest
 	{
 		public int Id { get; set; }
+		[Required]
 		public string Status { get; set; }
 
 		public int GigId { get; set; }

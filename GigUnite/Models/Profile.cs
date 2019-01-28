@@ -9,9 +9,15 @@ namespace GigUnite.Models
 	public class Profile
 	{
 		public int Id { get; set; }
-		public string Name { get; set; }
+		[Required]
+		[StringLength(30, ErrorMessage = "Name can't exceed 30 characters")]
+		[Display(Name = "Display name")]
+		public string Displayname { get; set; }
+		[Required]
+		[StringLength(30, ErrorMessage = "City can't exceed 30 characters")]
 		public string City { get; set; }
 		[DataType(DataType.Date)]
+		[Display(Name = "Date of Birth")]
 		public DateTime Dob { get; set; }
 		public string Bio { get; set; }
 		public string UserId { get; set; }

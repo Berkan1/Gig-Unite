@@ -9,6 +9,7 @@ namespace GigUnite.Models
 	public class Comment
 	{
 		public int Id { get; set; }
+		[Required]
 		public string Message { get; set; }
 		public DateTime TimePosted { get; set; }
 

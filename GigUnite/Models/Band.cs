@@ -9,6 +9,7 @@ namespace GigUnite.Models
 	public class Band
 	{
 		public int Id { get; set; }
+		[Required]
 		public string Name { get; set; }
 
 		public virtual ICollection<Profile> Profiles { get; set; }
