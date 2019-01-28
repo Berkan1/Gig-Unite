@@ -13,8 +13,7 @@ namespace GigUnite.Models
 		public string Message { get; set; }
 		public DateTime TimePosted { get; set; }
 
-		public int ProfileId { get; set; }
-		public virtual Profile Profile { get; set; }
+		public int UserId { get; set; }
 
 		public int GigId { get; set; }
 		public virtual Gig Gig { get; set; }

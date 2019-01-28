@@ -12,10 +12,8 @@ namespace GigUnite.Models
 		[Required]
 		public string Status { get; set; }
 
-		public int GigId { get; set; }
-		public virtual Gig Gig { get; set; }
+		public int EventId { get; set; }
 
-		public int ProfileId { get; set; }
-		public virtual Profile Profile { get; set; }
+		public int UserId { get; set; }
 	}
 }

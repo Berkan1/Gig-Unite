@@ -23,9 +23,7 @@ namespace GigUnite.Models
 		public string UserId { get; set; }
 
 		public virtual ICollection<Gig> Gigs { get; set; }
-		public virtual ICollection<Interest> Interests { get; set; }
 		public virtual ICollection<ProfileGenre> ProfileGenres { get; set; }
 		public virtual ICollection<ProfileBand> ProfileBands { get; set; }
-		public virtual ICollection<Comment> Comments { get; set; }
 	}
 }

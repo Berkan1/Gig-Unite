@@ -20,6 +20,9 @@ namespace GigUnite.Data
 		public DbSet<Genre> Genre { get; set; }
 		public DbSet<Band> Band { get; set; }
 		public DbSet<Comment> Comment { get; set; }
+		public DbSet<ProfileGenre> ProfileGenre { get; set; }
+		public DbSet<ProfileBand> ProfileBand { get; set; }
+		public DbSet<GigGenre> GigGenre { get; set; }
 
 	}
 }
