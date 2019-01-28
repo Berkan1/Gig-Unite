@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Text;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
+using GigUnite.Models;
 
 namespace GigUnite.Data
 {
@@ -12,5 +13,13 @@ namespace GigUnite.Data
 			: base(options)
 		{
 		}
+
+		public DbSet<Gig> Gig { get; set; }
+		public DbSet<Interest> Interest { get; set; }
+		public DbSet<Profile> Profile { get; set; }
+		public DbSet<Genre> Genre { get; set; }
+		public DbSet<Band> Band { get; set; }
+		public DbSet<Comment> Comment { get; set; }
+
 	}
 }

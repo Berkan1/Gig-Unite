@@ -12,7 +12,7 @@ namespace GigUnite.Models
 		[Required]
 		public string Name { get; set; }
 
-		public virtual ICollection<Profile> Profiles { get; set; }
+		public virtual ICollection<ProfileBand> ProfileBands { get; set; }
 		public virtual ICollection<Gig> Gigs { get; set; }
 	}
 }
