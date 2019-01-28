@@ -10,7 +10,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace GigUnite.Data.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20190128134546_InitialModels")]
+    [Migration("20190128143812_InitialModels")]
     partial class InitialModels
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -156,6 +156,8 @@ namespace GigUnite.Data.Migrations
                         .HasMaxLength(30);
 
                     b.Property<DateTime>("Dob");
+
+                    b.Property<string>("ImageURL");
 
                     b.Property<string>("UserId");
 

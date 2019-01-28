@@ -59,6 +59,7 @@ namespace GigUnite.Data.Migrations
                     City = table.Column<string>(maxLength: 30, nullable: false),
                     Dob = table.Column<DateTime>(nullable: false),
                     Bio = table.Column<string>(nullable: true),
+                    ImageURL = table.Column<string>(nullable: true),
                     UserId = table.Column<string>(nullable: true)
                 },
                 constraints: table =>

@@ -15,12 +15,15 @@
     <Compile Remove="Data\Migrations\20190128134010_InitialModels.Designer.cs" />
     <Compile Remove="Data\Migrations\20190128134324_InitialModels.cs" />
     <Compile Remove="Data\Migrations\20190128134324_InitialModels.Designer.cs" />
+    <Compile Remove="Data\Migrations\20190128134546_InitialModels.cs" />
+    <Compile Remove="Data\Migrations\20190128134546_InitialModels.Designer.cs" />
   </ItemGroup>
 
 
   <ItemGroup>
     <PackageReference Include="Microsoft.AspNetCore.App" />
     <PackageReference Include="Microsoft.AspNetCore.Razor.Design" Version="2.2.0" PrivateAssets="All" />
+    <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="2.2.0" />
   </ItemGroup>
 
 </Project>

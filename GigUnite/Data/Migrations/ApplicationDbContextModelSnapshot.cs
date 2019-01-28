@@ -155,6 +155,8 @@ namespace GigUnite.Data.Migrations
 
                     b.Property<DateTime>("Dob");
 
+                    b.Property<string>("ImageURL");
+
                     b.Property<string>("UserId");
 
                     b.HasKey("Id");
