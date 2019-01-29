@@ -46,10 +46,10 @@ namespace GigUnite.Controllers
                 return NotFound();
             }
 
-            return View(profile);
+			return View(profile);
         }
 
-		public async Task<IActionResult> YourDetails()
+		public async Task<IActionResult> MyProfile()
 		{
 			string userId = _userManager.GetUserId(HttpContext.User);
 
@@ -60,6 +60,56 @@ namespace GigUnite.Controllers
 				return NotFound();
 			}
 
+			return View(profile);
+		}
+
+		// GET: Profiles/EditProfile/
+		public async Task<IActionResult> Edit()
+		{
+			string userId = _userManager.GetUserId(HttpContext.User);
+
+			var profile = await _context.Profile
+				.FirstOrDefaultAsync(m => m.UserId == userId);
+			if (profile == null)
+			{
+				return NotFound();
+			}
+
+			return View(profile);
+		}
+
+		// POST: Profiles/Edit/5
+		// To protect from overposting attacks, please enable the specific properties you want to bind to, for 
+		// more details see http://go.microsoft.com/fwlink/?LinkId=317598.
+		[HttpPost]
+		[ValidateAntiForgeryToken]
+		public async Task<IActionResult> Edit(int id, [Bind("Id,Displayname,City,Dob,Bio,UserId")] Profile profile)
+		{
+			if (id != profile.Id)
+			{
+				return NotFound();
+			}
+
+			if (ModelState.IsValid)
+			{
+				try
+				{
+					_context.Update(profile);
+					await _context.SaveChangesAsync();
+				}
+				catch (DbUpdateConcurrencyException)
+				{
+					if (!ProfileExists(profile.Id))
+					{
+						return NotFound();
+					}
+					else
+					{
+						throw;
+					}
+				}
+				return RedirectToAction(nameof(MyProfile));
+			}
 			return View(profile);
 		}
 
