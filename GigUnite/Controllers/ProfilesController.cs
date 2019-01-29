@@ -9,10 +9,12 @@ using GigUnite.Data;
 using GigUnite.Models;
 using Microsoft.AspNetCore.Identity;
 using static GigUnite.DAO.ProfileDAO;
+using Microsoft.AspNetCore.Authorization;
 
 namespace GigUnite.Controllers
 {
-    public class ProfilesController : Controller
+	[Authorize]
+	public class ProfilesController : Controller
     {
         private readonly ApplicationDbContext _context;
 		private readonly UserManager<IdentityUser> _userManager;
@@ -50,13 +52,6 @@ namespace GigUnite.Controllers
 		public async Task<IActionResult> YourDetails()
 		{
 			string userId = _userManager.GetUserId(HttpContext.User);
-
-			var data = LoadYourProfile(userId);
-
-			if (data == 0)
-			{
-				CreateProfile("Unnamed", "London", new DateTime(2000, 01, 01), userId);
-			}
 
 			var profile = await _context.Profile
 				.FirstOrDefaultAsync(m => m.UserId == userId);
