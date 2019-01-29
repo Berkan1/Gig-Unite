@@ -75,6 +75,11 @@ namespace GigUnite.Controllers
 				return NotFound();
 			}
 
+			var genres = from m in _context.Genre
+						 select m.Name;
+
+			ViewBag.Genres = genres;
+
 			return View(profile);
 		}
 
@@ -83,11 +88,11 @@ namespace GigUnite.Controllers
 		// more details see http://go.microsoft.com/fwlink/?LinkId=317598.
 		[HttpPost]
 		[ValidateAntiForgeryToken]
-		public async Task<IActionResult> Edit(int id, [Bind("Id,Displayname,City,Dob,Bio,UserId")] Profile profile)
+		public async Task<IActionResult> Edit([Bind("Id,Displayname,City,Dob,Bio,UserId")] Profile profile, string ProfileGenre)
 		{
-			if (id != profile.Id)
+			if (ProfileGenre == "Rock")
 			{
-				return NotFound();
+				return RedirectToAction(nameof(Index));
 			}
 
 			if (ModelState.IsValid)

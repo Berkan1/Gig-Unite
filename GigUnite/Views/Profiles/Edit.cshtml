@@ -6,12 +6,18 @@
 
 <h1>Edit</h1>
 
+<ul>
+	@foreach (string genre in ViewBag.Genres)
+	{
+		<li>@genre</li>
+	}
+</ul>
+
 <h4>Profile</h4>
 <hr />
 <div class="row">
 	<div class="col-md-4">
 		<form asp-action="Edit">
-			<div asp-validation-summary="ModelOnly" class="text-danger"></div>
 			<input type="hidden" asp-for="Id" />
 			<div class="form-group">
 				<label asp-for="Displayname" class="control-label"></label>
@@ -36,7 +42,19 @@
 			<div class="form-group">
 				<label asp-for="UserId" class="control-label"></label>
 				<input asp-for="UserId" class="form-control" />
-				<span asp-validation-for="UserId" class="text-danger"></span>
+				<span asp-validation-for="Bio" class="text-danger"></span>
+			</div>
+			<div class="form-group">
+				<select multiple asp-for="ProfileGenres" style="width: 200px; height: 150px">
+					@foreach (string genre in ViewBag.Genres)
+					{
+						<option value=@genre>@genre</option>
+					}
+					<option value="volvo">Volvo</option>
+					<option value="saab">Saab</option>
+					<option value="opel">Opel</option>
+					<option value="Audi">Audi</option>
+				</select>
 			</div>
 			<div class="form-group">
 				<input type="submit" value="Save" class="btn btn-primary" />
