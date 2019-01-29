@@ -6,9 +6,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace GigUnite.BusinessLogic
+namespace GigUnite.DAO
 {
-	public static class ProfileProcessor
+	public static class ProfileDAO
 	{
 		public static int CreateProfile(string displayname, string city, DateTime dob, string userId)
 		{

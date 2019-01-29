@@ -8,7 +8,7 @@ using Microsoft.EntityFrameworkCore;
 using GigUnite.Data;
 using GigUnite.Models;
 using Microsoft.AspNetCore.Identity;
-using static GigUnite.BusinessLogic.ProfileProcessor;
+using static GigUnite.DAO.ProfileDAO;
 
 namespace GigUnite.Controllers
 {
