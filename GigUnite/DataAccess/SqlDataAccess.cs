@@ -24,6 +24,28 @@ namespace GigUnite.DataAccess
 			}
 		}
 
+		public static int GetId(string sql, string name)
+		{
+			using (SqlConnection cnn = new SqlConnection(connect))
+			{
+				SqlCommand command = new SqlCommand(sql, cnn);
+				command.Parameters.Add("@Name", SqlDbType.NVarChar);
+				command.Parameters["@Name"].Value = name;
+				int result = 0;
+
+				try
+				{
+					cnn.Open();
+					result = (int)command.ExecuteScalar(); ;
+				}
+				catch (Exception ex)
+				{
+					throw;
+				}
+				return result;
+			}
+		}
+
 		public static int LoadUserData(string sql, string userId)
 		{
 			using (SqlConnection cnn = new SqlConnection(connect))
@@ -51,6 +73,52 @@ namespace GigUnite.DataAccess
 			using (IDbConnection cnn = new SqlConnection(connect))
 			{
 				return cnn.Execute(sql, data);
+			}
+		}
+
+		public static int SaveIds(string sql, int profileId, int genreId)
+		{
+			using (SqlConnection cnn = new SqlConnection(connect))
+			{
+				SqlCommand command = new SqlCommand(sql, cnn);
+				command.Parameters.Add("@ProfileId", SqlDbType.NVarChar);
+				command.Parameters["@ProfileId"].Value = profileId;
+				command.Parameters.Add("@GenreId", SqlDbType.NVarChar);
+				command.Parameters["@GenreId"].Value = genreId;
+				int result;
+
+				try
+				{
+					cnn.Open();
+					result = command.ExecuteNonQuery();
+				}
+				catch (Exception ex)
+				{
+					throw;
+				}
+				return result;
+			}
+		}
+
+		public static int DeleteId(string sql, int profileId)
+		{
+			using (SqlConnection cnn = new SqlConnection(connect))
+			{
+				SqlCommand command = new SqlCommand(sql, cnn);
+				command.Parameters.Add("@ProfileId", SqlDbType.NVarChar);
+				command.Parameters["@ProfileId"].Value = profileId;
+				int result;
+
+				try
+				{
+					cnn.Open();
+					result = command.ExecuteNonQuery();
+				}
+				catch (Exception ex)
+				{
+					throw;
+				}
+				return result;
 			}
 		}
 	}

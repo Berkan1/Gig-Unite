@@ -60,6 +60,8 @@ namespace GigUnite.Controllers
 				return NotFound();
 			}
 
+			
+
 			return View(profile);
 		}
 
@@ -88,12 +90,8 @@ namespace GigUnite.Controllers
 		// more details see http://go.microsoft.com/fwlink/?LinkId=317598.
 		[HttpPost]
 		[ValidateAntiForgeryToken]
-		public async Task<IActionResult> Edit([Bind("Id,Displayname,City,Dob,Bio,UserId")] Profile profile, string ProfileGenre)
+		public async Task<IActionResult> Edit([Bind("Id,Displayname,City,Dob,Bio,UserId")] Profile profile, List<string> genres)
 		{
-			if (ProfileGenre == "Rock")
-			{
-				return RedirectToAction(nameof(Index));
-			}
 
 			if (ModelState.IsValid)
 			{
@@ -113,8 +111,17 @@ namespace GigUnite.Controllers
 						throw;
 					}
 				}
+
+				DeleteProfileGenres(profile.Id);
+
+				foreach (var genre in genres)
+				{
+					AddGenresToProfile(profile.Id, genre);
+				}
+
 				return RedirectToAction(nameof(MyProfile));
 			}
+
 			return View(profile);
 		}
 

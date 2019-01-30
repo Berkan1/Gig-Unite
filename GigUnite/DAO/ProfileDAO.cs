@@ -31,5 +31,23 @@ namespace GigUnite.DAO
 
 			return SqlDataAccess.LoadUserData(sql, userId);
 		}
+
+		public static int DeleteProfileGenres(int profileId)
+		{
+			string deletesql = @"DELETE FROM dbo.ProfileGenre WHERE ProfileId = @ProfileId";
+
+			return SqlDataAccess.DeleteId(deletesql, profileId);
+		}
+
+		public static int AddGenresToProfile(int profileId, string name)
+		{
+			string sql = @"SELECT Id FROM dbo.Genre WHERE Name = @Name";
+
+			int theId = SqlDataAccess.GetId(sql, name);
+
+			string sql2 = @"INSERT INTO dbo.ProfileGenre (ProfileId, GenreId) VALUES (@ProfileId, @GenreId);";
+
+			return SqlDataAccess.SaveIds(sql2, profileId, theId);
+		}
 	}
 }
