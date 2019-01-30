@@ -18,10 +18,8 @@ namespace GigUnite.Data
 		public DbSet<Interest> Interest { get; set; }
 		public DbSet<Profile> Profile { get; set; }
 		public DbSet<Genre> Genre { get; set; }
-		public DbSet<Band> Band { get; set; }
 		public DbSet<Comment> Comment { get; set; }
 		public DbSet<ProfileGenre> ProfileGenre { get; set; }
-		public DbSet<ProfileBand> ProfileBand { get; set; }
 		public DbSet<GigGenre> GigGenre { get; set; }
 
 	}

@@ -20,11 +20,15 @@ namespace GigUnite.Models
 		[Display(Name = "Date of Birth")]
 		public DateTime Dob { get; set; }
 		public string Bio { get; set; }
+		public string Band1 { get; set; }
+		public string Band2 { get; set; }
+		public string Band3 { get; set; }
+		public string Band4 { get; set; }
+		public string Band5 { get; set; }
 		public string ImageURL { get; set; }
 		public string UserId { get; set; }
 
 		public virtual ICollection<Gig> Gigs { get; set; }
 		public virtual ICollection<ProfileGenre> ProfileGenres { get; set; }
-		public virtual ICollection<ProfileBand> ProfileBands { get; set; }
 	}
 }

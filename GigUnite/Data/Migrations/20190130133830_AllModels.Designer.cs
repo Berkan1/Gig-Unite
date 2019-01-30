@@ -10,8 +10,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace GigUnite.Data.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20190128143812_InitialModels")]
-    partial class InitialModels
+    [Migration("20190130133830_AllModels")]
+    partial class AllModels
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -20,20 +20,6 @@ namespace GigUnite.Data.Migrations
                 .HasAnnotation("ProductVersion", "2.2.0-rtm-35687")
                 .HasAnnotation("Relational:MaxIdentifierLength", 128)
                 .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-            modelBuilder.Entity("GigUnite.Models.Band", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<string>("Name")
-                        .IsRequired();
-
-                    b.HasKey("Id");
-
-                    b.ToTable("Band");
-                });
 
             modelBuilder.Entity("GigUnite.Models.Comment", b =>
                 {
@@ -77,7 +63,9 @@ namespace GigUnite.Data.Migrations
                         .ValueGeneratedOnAdd()
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<int>("BandId");
+                    b.Property<string>("Band")
+                        .IsRequired()
+                        .HasMaxLength(50);
 
                     b.Property<DateTime>("Date");
 
@@ -94,8 +82,6 @@ namespace GigUnite.Data.Migrations
                         .HasMaxLength(50);
 
                     b.HasKey("Id");
-
-                    b.HasIndex("BandId");
 
                     b.HasIndex("ProfileId");
 
@@ -145,6 +131,16 @@ namespace GigUnite.Data.Migrations
                         .ValueGeneratedOnAdd()
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
+                    b.Property<string>("Band1");
+
+                    b.Property<string>("Band2");
+
+                    b.Property<string>("Band3");
+
+                    b.Property<string>("Band4");
+
+                    b.Property<string>("Band5");
+
                     b.Property<string>("Bio");
 
                     b.Property<string>("City")
@@ -164,25 +160,6 @@ namespace GigUnite.Data.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Profile");
-                });
-
-            modelBuilder.Entity("GigUnite.Models.ProfileBand", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<int>("BandId");
-
-                    b.Property<int>("ProfileId");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("BandId");
-
-                    b.HasIndex("ProfileId");
-
-                    b.ToTable("ProfileBand");
                 });
 
             modelBuilder.Entity("GigUnite.Models.ProfileGenre", b =>
@@ -379,11 +356,6 @@ namespace GigUnite.Data.Migrations
 
             modelBuilder.Entity("GigUnite.Models.Gig", b =>
                 {
-                    b.HasOne("GigUnite.Models.Band", "Band")
-                        .WithMany("Gigs")
-                        .HasForeignKey("BandId")
-                        .OnDelete(DeleteBehavior.Cascade);
-
                     b.HasOne("GigUnite.Models.Profile", "Profile")
                         .WithMany("Gigs")
                         .HasForeignKey("ProfileId")
@@ -400,19 +372,6 @@ namespace GigUnite.Data.Migrations
                     b.HasOne("GigUnite.Models.Gig", "Gig")
                         .WithMany("GigGenres")
                         .HasForeignKey("GigId")
-                        .OnDelete(DeleteBehavior.Cascade);
-                });
-
-            modelBuilder.Entity("GigUnite.Models.ProfileBand", b =>
-                {
-                    b.HasOne("GigUnite.Models.Band", "Band")
-                        .WithMany("ProfileBands")
-                        .HasForeignKey("BandId")
-                        .OnDelete(DeleteBehavior.Cascade);
-
-                    b.HasOne("GigUnite.Models.Profile", "Profile")
-                        .WithMany("ProfileBands")
-                        .HasForeignKey("ProfileId")
                         .OnDelete(DeleteBehavior.Cascade);
                 });
 
