@@ -35,10 +35,13 @@
 			@Html.DisplayFor(model => model.Bio)
 		</dd>
 		<dt class="col-sm-2">
-			@Html.DisplayNameFor(model => model.UserId)
+			Genres I Like
 		</dt>
 		<dd class="col-sm-10">
-			@Html.DisplayFor(model => model.UserId)
+			@foreach (string genre in ViewBag.MyGenres)
+			{
+				@genre <br />
+			}
 		</dd>
 	</dl>
 </div>
