@@ -46,6 +46,12 @@ namespace GigUnite.Controllers
                 return NotFound();
             }
 
+			var mygenres = from m in _context.ProfileGenre
+						   where m.ProfileId == profile.Id
+						   select m.Genre.Name;
+
+			ViewBag.MyGenres = mygenres;
+
 			return View(profile);
         }
 
@@ -81,12 +87,17 @@ namespace GigUnite.Controllers
 				return NotFound();
 			}
 
-			var genres = from m in _context.Genre
-						 select m.Name;
-
 			var mygenres = from m in _context.ProfileGenre
 						   where m.ProfileId == profile.Id
 						   select m.Genre.Name;
+
+			var genres = from m in _context.Genre
+						 select m.Name;
+
+			foreach (var genre in mygenres)
+			{
+				genres = genres.Where(val => val != genre);
+			}
 
 			ViewBag.MyGenres = mygenres;
 
