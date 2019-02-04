@@ -33,6 +33,11 @@
 				<span asp-validation-for="Bio" class="text-danger"></span>
 			</div>
 			<div class="form-group">
+				<label asp-for="ImageURL" class="control-label"></label>
+				<input asp-for="ImageURL" class="form-control" />
+				<span asp-validation-for="ImageURL" class="text-danger"></span>
+			</div>
+			<div class="form-group">
 				<label asp-for="Band1" class="control-label"></label>
 				<input asp-for="Band1" class="form-control" />
 				<span asp-validation-for="Band1" class="text-danger"></span>
@@ -89,3 +94,10 @@
 @section Scripts {
 	@{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
 }
+
+<script>
+	$('#genres').multiselect({
+		columns: 1,
+		placeholder: 'Select genres'
+	});
+</script>

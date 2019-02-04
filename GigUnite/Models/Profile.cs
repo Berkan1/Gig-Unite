@@ -11,7 +11,7 @@ namespace GigUnite.Models
 		public int Id { get; set; }
 		[Required]
 		[StringLength(30, ErrorMessage = "Name can't exceed 30 characters")]
-		[Display(Name = "Display name")]
+		[Display(Name = "Display Name")]
 		public string Displayname { get; set; }
 		[Required]
 		[StringLength(30, ErrorMessage = "City can't exceed 30 characters")]
