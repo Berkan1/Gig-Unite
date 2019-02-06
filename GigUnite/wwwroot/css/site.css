@@ -58,3 +58,11 @@ body {
 h1 {
 	text-align: center;
 }
+
+p span {
+	border: 2px solid red;
+	border-radius: 12px;
+	background-color: #FB8E87;
+	padding-left: 10px;
+	padding-right: 10px;
+}

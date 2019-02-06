@@ -19,7 +19,7 @@
 			}
 		</div>
 		<div class="col-sx-6 col-sm-6 col-md-8 col-lg-8">
-			<p>@Html.DisplayNameFor(model => model.Dob) - @Html.DisplayFor(model => model.Dob)</p>
+			<p id="age">@Html.DisplayFor(model => model.Dob)</p>
 			<p><b>@Html.DisplayNameFor(model => model.Bio)</b></p>
 			<p>@Html.DisplayFor(model => model.Bio)</p>
 		</div>
@@ -29,7 +29,7 @@
 			<p><b>Genres I Like</b></p>
 			@foreach (string genre in ViewBag.MyGenres)
 			{
-				<p>-@genre</p>
+				<p><span>@genre</span></p>
 			}
 		</div>
 		<div class="col-xs-6 col-sm-6 col-md-8 col-lg-8">
