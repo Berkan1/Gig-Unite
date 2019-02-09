@@ -59,10 +59,51 @@ h1 {
 	text-align: center;
 }
 
-p span {
+span.tags {
 	border: 2px solid red;
 	border-radius: 12px;
 	background-color: #FB8E87;
 	padding-left: 10px;
 	padding-right: 10px;
+	line-height: 2;
+}
+
+p.rank1 {
+	background-color: #20B704;
+	background-image: linear-gradient(to right, #20B704, #FFFFFF);
+}
+
+p.rank2 {
+	background-color: #37D819;
+	background-image: linear-gradient(to right, #37D819, #FFFFFF);
+}
+
+p.rank3 {
+	background-color: #46EB27;
+	background-image: linear-gradient(to right, #46EB27, #FFFFFF);
+}
+
+p.rank4 {
+	background-color: #5BF53E;
+	background-image: linear-gradient(to right, #5BF53E, #FFFFFF);
+}
+
+p.rank5 {
+	background-color: #78FF60;
+	background-image: linear-gradient(to right, #78FF60, #FFFFFF);
+}
+
+.large {
+	font-size: 2vw;
+}
+
+hr {
+	height: 9px;
+	box-shadow: inset 0 9px 9px -9px rgba(0, 0, 0, 0.5);
+}
+
+img {
+	padding-top: 10px;
+	padding-bottom: 10px;
+	border-radius: 50%;
 }

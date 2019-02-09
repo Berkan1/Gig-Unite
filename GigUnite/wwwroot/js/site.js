@@ -4,7 +4,9 @@
 // Write your JavaScript code.
 $(document).ready(function () {
 
-    calculateAge(document.getElementById("age").innerHTML);
+    if (document.getElementById("age")) {
+        calculateAge(document.getElementById("age").innerHTML);
+    };
 
     $('#genres').multiselect({
         columns: 2,
@@ -31,5 +33,5 @@ function calculateAge(dob) {
         age = age - 1;
     }
 
-    document.getElementById("age").innerHTML = age;
+    document.getElementById("age").innerHTML = "Age: " + age;
 }

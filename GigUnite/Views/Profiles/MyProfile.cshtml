@@ -19,9 +19,9 @@
 			}
 		</div>
 		<div class="col-sx-6 col-sm-6 col-md-8 col-lg-8">
-			<p id="age">@Html.DisplayFor(model => model.Dob)</p>
-			<p><b>@Html.DisplayNameFor(model => model.Bio)</b></p>
-			<p>@Html.DisplayFor(model => model.Bio)</p>
+			<p id="age" class="large">@Html.DisplayFor(model => model.Dob)</p>
+			<hr>
+			<p class="large">@Html.DisplayFor(model => model.Bio)</p>
 		</div>
 	</div>
 	<div class="row">
@@ -29,16 +29,16 @@
 			<p><b>Genres I Like</b></p>
 			@foreach (string genre in ViewBag.MyGenres)
 			{
-				<p><span>@genre</span></p>
+				<span class="tags">@genre</span>
 			}
 		</div>
-		<div class="col-xs-6 col-sm-6 col-md-8 col-lg-8">
+		<div class="col-xs-6 col-sm-6 col-md-4 col-lg-4">
 			<p><b>My 5 favourite bands</b></p>
-			<p>@Html.DisplayFor(model => model.Band1)</p>
-			<p>@Html.DisplayFor(model => model.Band2)</p>
-			<p>@Html.DisplayFor(model => model.Band3)</p>
-			<p>@Html.DisplayFor(model => model.Band4)</p>
-			<p>@Html.DisplayFor(model => model.Band5)</p>
+			<p class="rank1"><b>1) @Html.DisplayFor(model => model.Band1)</b></p>
+			<p class="rank2"><b>2) @Html.DisplayFor(model => model.Band2)</b></p>
+			<p class="rank3"><b>3) @Html.DisplayFor(model => model.Band3)</b></p>
+			<p class="rank4"><b>4) @Html.DisplayFor(model => model.Band4)</b></p>
+			<p class="rank5"><b>5) @Html.DisplayFor(model => model.Band5)</b></p>
 		</div>
 	</div>
 <div>
