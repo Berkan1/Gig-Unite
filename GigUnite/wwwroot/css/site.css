@@ -107,3 +107,8 @@ img {
 	padding-bottom: 10px;
 	border-radius: 50%;
 }
+
+input[type=submit] {
+	margin: auto;
+	display: block;
+}
