@@ -62,9 +62,25 @@ namespace GigUnite.Areas.Identity.Pages.Account
             ReturnUrl = returnUrl;
         }
 
-        public async Task<IActionResult> OnPostAsync(string returnUrl = null)
+		public async Task<IActionResult> OnPostAsync(string returnUrl = null, string displayname = null, string dob = null)
         {
-            returnUrl = returnUrl ?? Url.Content("~/");
+
+			if (CheckNameAvailability(displayname) == 1)
+			{
+				ViewData["Error"] = "This display name is already taken";
+				return Page();
+			}
+
+			string[] dates = dob.Split('-');
+			var newdob = new DateTime(int.Parse(dates[0]), int.Parse(dates[1]), int.Parse(dates[2]));
+
+			if (newdob > DateTime.Now)
+			{
+				ViewData["DateError"] = "This is not a valid date of birth";
+				return Page();
+			}
+
+			returnUrl = returnUrl ?? Url.Content("~/Profiles/Edit");
             if (ModelState.IsValid)
             {
                 var user = new IdentityUser { UserName = Input.Email, Email = Input.Email };
@@ -80,7 +96,7 @@ namespace GigUnite.Areas.Identity.Pages.Account
                         values: new { userId = user.Id, code = code },
                         protocol: Request.Scheme);
 
-					CreateProfile("Unnamed", "N/A", new DateTime(2000, 01, 01), user.Id);
+					CreateProfile(displayname, "N/A", newdob, user.Id);
 
 					await _emailSender.SendEmailAsync(Input.Email, "Confirm your email",
                         $"Please confirm your account by <a href='{HtmlEncoder.Default.Encode(callbackUrl)}'>clicking here</a>.");

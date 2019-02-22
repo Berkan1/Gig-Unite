@@ -121,5 +121,27 @@ namespace GigUnite.DataAccess
 				return result;
 			}
 		}
+
+		public static int Exists(string sql, string condition)
+		{
+			using (SqlConnection cnn = new SqlConnection(connect))
+			{
+				SqlCommand command = new SqlCommand(sql, cnn);
+				command.Parameters.Add("@Displayname", SqlDbType.NVarChar);
+				command.Parameters["@Displayname"].Value = condition;
+				int result = 0;
+
+				try
+				{
+					cnn.Open();
+					result = (int)command.ExecuteScalar(); ;
+				}
+				catch (Exception ex)
+				{
+					throw;
+				}
+				return result;
+			}
+		}
 	}
 }

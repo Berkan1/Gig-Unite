@@ -113,6 +113,11 @@ namespace GigUnite.Controllers
 		[ValidateAntiForgeryToken]
 		public async Task<IActionResult> Edit([Bind("Id,Displayname,City,Dob,Bio,ImageURL,Band1,Band2,Band3,Band4,Band5,UserId")] Profile profile, List<string> genres)
 		{
+			if(CheckNameAvailability(profile.Displayname) == 1)
+			{
+				TempData["Error"] = "This name is already taken";
+				return RedirectToAction(nameof(Edit));
+			}
 
 			if (ModelState.IsValid)
 			{

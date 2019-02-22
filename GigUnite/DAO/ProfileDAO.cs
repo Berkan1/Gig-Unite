@@ -49,5 +49,12 @@ namespace GigUnite.DAO
 
 			return SqlDataAccess.SaveIds(sql2, profileId, theId);
 		}
+
+		public static int CheckNameAvailability(string displayname)
+		{
+			string sql = @"SELECT COUNT(*) FROM dbo.Profile WHERE Displayname = @Displayname;";
+
+			return SqlDataAccess.Exists(sql, displayname);
+		}
 	}
 }
