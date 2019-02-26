@@ -143,5 +143,78 @@ namespace GigUnite.DataAccess
 				return result;
 			}
 		}
+
+		public static int Delete(string sql, string sql2, string sql3, string sql4, string userId)
+		{
+			using (SqlConnection cnn = new SqlConnection(connect))
+			{
+				SqlCommand command = new SqlCommand(sql, cnn);
+				command.Parameters.Add("@UserId", SqlDbType.NVarChar);
+				command.Parameters["@UserId"].Value = userId;
+				int result = 0;
+
+				try
+				{
+					cnn.Open();
+					result = (int)command.ExecuteScalar(); ;
+				}
+				catch (Exception ex)
+				{
+					throw;
+				}
+
+				DeleteProfile(sql2, result);
+
+				DeleteId(sql3, result);
+
+				DeleteInterest(sql4, result);
+
+				return result;
+			}
+		}
+
+		public static int DeleteProfile(string sql, int Id)
+		{
+			using (SqlConnection cnn = new SqlConnection(connect))
+			{
+				SqlCommand command = new SqlCommand(sql, cnn);
+				command.Parameters.Add("@Id", SqlDbType.NVarChar);
+				command.Parameters["@Id"].Value = Id;
+				int result;
+
+				try
+				{
+					cnn.Open();
+					result = command.ExecuteNonQuery();
+				}
+				catch (Exception ex)
+				{
+					throw;
+				}
+				return result;
+			}
+		}
+
+		public static int DeleteInterest(string sql, int UserId)
+		{
+			using (SqlConnection cnn = new SqlConnection(connect))
+			{
+				SqlCommand command = new SqlCommand(sql, cnn);
+				command.Parameters.Add("@UserId", SqlDbType.NVarChar);
+				command.Parameters["@UserId"].Value = UserId;
+				int result;
+
+				try
+				{
+					cnn.Open();
+					result = command.ExecuteNonQuery();
+				}
+				catch (Exception ex)
+				{
+					throw;
+				}
+				return result;
+			}
+		}
 	}
 }

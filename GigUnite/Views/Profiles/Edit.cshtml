@@ -118,10 +118,11 @@
 				</div>
 			</div>
 		</div>
-		<input type="hidden" asp-for="Id" />
-		<input type="hidden" asp-for="City" />
-		<input type="hidden" asp-for="UserId" />
-		<input type="hidden" asp-for="ImageURL" />
+		<input type="hidden" asp-for="Id" readonly/>
+		<input type="hidden" asp-for="City" readonly/>
+		<input type="hidden" asp-for="UserId" readonly/>
+		<input type="hidden" asp-for="ImageURL" readonly/>
+		<input type="hidden" name="ogName" value="@ViewBag.OgName" readonly/>
 
 		<div class="form-group">
 			<input type="submit" value="Save" class="btn btn-primary" />

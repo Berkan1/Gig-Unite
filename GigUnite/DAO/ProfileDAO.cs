@@ -56,5 +56,15 @@ namespace GigUnite.DAO
 
 			return SqlDataAccess.Exists(sql, displayname);
 		}
+
+		public static int deleteProfile (string userId)
+		{
+			string sql = @"SELECT Id FROM dbo.Profile WHERE UserId = @UserId";
+			string sql2 = @"DELETE FROM dbo.Profile WHERE Id = @Id;";
+			string sql3 = @"DELETE FROM dbo.ProfileGenre WHERE ProfileId = @ProfileId;";
+			string sql4 = @"DELETE FROM dbo.Interest WHERE UserId = @UserId;";
+
+			return SqlDataAccess.Delete(sql, sql2, sql3, sql4, userId);
+		}
 	}
 }

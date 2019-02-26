@@ -100,8 +100,8 @@ namespace GigUnite.Controllers
 			}
 
 			ViewBag.MyGenres = mygenres;
-
 			ViewBag.Genres = genres;
+			ViewBag.OgName = profile.Displayname;
 
 			return View(profile);
 		}
@@ -111,9 +111,9 @@ namespace GigUnite.Controllers
 		// more details see http://go.microsoft.com/fwlink/?LinkId=317598.
 		[HttpPost]
 		[ValidateAntiForgeryToken]
-		public async Task<IActionResult> Edit([Bind("Id,Displayname,City,Dob,Bio,ImageURL,Band1,Band2,Band3,Band4,Band5,UserId")] Profile profile, List<string> genres)
+		public async Task<IActionResult> Edit([Bind("Id,Displayname,City,Dob,Bio,ImageURL,Band1,Band2,Band3,Band4,Band5,UserId")] Profile profile, List<string> genres, string ogName)
 		{
-			if(CheckNameAvailability(profile.Displayname) == 1)
+			if(ogName != profile.Displayname && CheckNameAvailability(profile.Displayname) == 1)
 			{
 				TempData["Error"] = "This name is already taken";
 				return RedirectToAction(nameof(Edit));
