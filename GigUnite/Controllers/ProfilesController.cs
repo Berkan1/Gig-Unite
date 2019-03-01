@@ -32,15 +32,15 @@ namespace GigUnite.Controllers
         }
 
         // GET: Profiles/Details/5
-        public async Task<IActionResult> Details(int? id)
+        public async Task<IActionResult> Details(string id)
         {
-            if (id == null)
+            if (id == null || id == "")
             {
                 return NotFound();
             }
 
             var profile = await _context.Profile
-                .FirstOrDefaultAsync(m => m.Id == id);
+                .FirstOrDefaultAsync(m => m.Displayname == id);
             if (profile == null)
             {
                 return NotFound();

@@ -18,8 +18,7 @@ namespace GigUnite.Models
 		[StringLength(50, ErrorMessage = "Venue name can't exceed 50 characters")]
 		public string Venue { get; set; }
 		public decimal? Price { get; set; }
-		public double Latitude { get; set; }
-		public double Longitude { get; set; }
+		public string Location { get; set; }
 
 		public int ProfileId { get; set; }
 		public virtual Profile Profile { get; set; }

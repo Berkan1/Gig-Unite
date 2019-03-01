@@ -1,61 +1,82 @@
 ﻿@model GigUnite.Models.Gig
 
 @{
-    ViewData["Title"] = "Details";
-    Layout = "~/Views/Shared/_Layout.cshtml";
+	ViewData["Title"] = "Details";
+	Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
 <h1>Details</h1>
 
 <div>
-    <h4>Gig</h4>
-    <hr />
-    <dl class="row">
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Band)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Band)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Date)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Date)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Venue)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Venue)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Price)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Price)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Latitude)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Latitude)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Longitude)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Longitude)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Profile)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Profile.City)
-        </dd>
-    </dl>
+	<h4>Gig</h4>
+	<hr />
+	<dl class="row">
+		<dt class="col-sm-2">
+			@Html.DisplayNameFor(model => model.Band)
+		</dt>
+		<dd class="col-sm-10">
+			@Html.DisplayFor(model => model.Band)
+		</dd>
+		<dt class="col-sm-2">
+			@Html.DisplayNameFor(model => model.Date)
+		</dt>
+		<dd class="col-sm-10">
+			@Html.DisplayFor(model => model.Date)
+		</dd>
+		<dt class="col-sm-2">
+			@Html.DisplayNameFor(model => model.Venue)
+		</dt>
+		<dd class="col-sm-10">
+			<p id="location">@Html.DisplayFor(model => model.Venue)</p>
+		</dd>
+		<dt class="col-sm-2">
+			@Html.DisplayNameFor(model => model.Price)
+		</dt>
+		<dd class="col-sm-10">
+			@Html.DisplayFor(model => model.Price)
+		</dd>
+		<dt class="col-sm-2">
+			Posted by
+		</dt>
+		<dd class="col-sm-10">
+			<a class="nav-link text-dark" asp-area="" asp-controller="Profiles" asp-action="Details" asp-route-id="@Model.Profile.Displayname">@Html.DisplayFor(model => model.Profile.Displayname)</a>
+		</dd>
+	</dl>
 </div>
+
+<div id="map"></div>
+<script>
+
+	var map;
+
+	function showMap() {
+		var map = new google.maps.Map(document.getElementById('map'), {
+			zoom: 8,
+			center: { lat: 51.5074, lng: 0.1278 }
+		});
+		var geocoder = new google.maps.Geocoder();
+
+		geocodeAddress(geocoder, map);
+	}
+
+	function geocodeAddress(geocoder, resultsMap) {
+		var address = document.getElementById('location').innerHTML;
+		geocoder.geocode({ 'address': address }, function (results, status) {
+			if (status === 'OK') {
+				resultsMap.setCenter(results[0].geometry.location);
+				resultsMap.setZoom(10);
+				var marker = new google.maps.Marker({
+					map: resultsMap,
+					position: results[0].geometry.location
+				});
+			}
+		});
+	}
+
+</script>
+<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDjXWcyMTwQFjJ5gaK2c3PzHRZOenKrTLA&libraries=places&callback=showMap" async defer></script>
+
 <div>
-    <a asp-action="Edit" asp-route-id="@Model.Id">Edit</a> |
-    <a asp-action="Index">Back to List</a>
+	<a asp-action="Edit" asp-route-id="@Model.Id">Edit</a> |
+	<a asp-action="Index">Back to List</a>
 </div>
