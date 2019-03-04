@@ -34,10 +34,20 @@
 				<span asp-validation-for="Price" class="text-danger"></span>
 			</div>
 			<div class="form-group">
-				<input asp-for="Location" class="form-control" type="hidden" readonly/>
+				<input asp-for="Location" class="form-control" type="hidden" readonly />
 			</div>
 			<div class="form-group">
-				<input name="ProfileId" id="ProfileId" class="form-control" value=1 type="hidden" readonly/>
+				<label asp-for="ProfileId" class="control-label"></label>
+				<input asp-for="ProfileId" class="form-control" value=@ViewBag.ProfileId />
+			</div>
+			<div class="form-group">
+				<label class="control-label">What genre(s) of music is this event?</label><br />
+				<select name="genres" id="genres" style="width: 200px; height: 150px" multiple>
+					@foreach (string genre in ViewBag.Genres)
+					{
+						<option value=@genre>@genre</option>
+					}
+				</select>
 			</div>
 			<div class="form-group">
 				<input type="submit" value="Create" class="btn btn-primary" />

@@ -81,8 +81,8 @@ namespace GigUnite.DataAccess
 			using (SqlConnection cnn = new SqlConnection(connect))
 			{
 				SqlCommand command = new SqlCommand(sql, cnn);
-				command.Parameters.Add("@ProfileId", SqlDbType.NVarChar);
-				command.Parameters["@ProfileId"].Value = profileId;
+				command.Parameters.Add("@FirstId", SqlDbType.NVarChar);
+				command.Parameters["@FirstId"].Value = profileId;
 				command.Parameters.Add("@GenreId", SqlDbType.NVarChar);
 				command.Parameters["@GenreId"].Value = genreId;
 				int result;

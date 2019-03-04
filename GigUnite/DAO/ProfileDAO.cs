@@ -45,7 +45,7 @@ namespace GigUnite.DAO
 
 			int theId = SqlDataAccess.GetId(sql, name);
 
-			string sql2 = @"INSERT INTO dbo.ProfileGenre (ProfileId, GenreId) VALUES (@ProfileId, @GenreId);";
+			string sql2 = @"INSERT INTO dbo.ProfileGenre (ProfileId, GenreId) VALUES (@FirstId, @GenreId);";
 
 			return SqlDataAccess.SaveIds(sql2, profileId, theId);
 		}

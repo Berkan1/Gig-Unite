@@ -5,19 +5,23 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.AspNetCore.Identity;
 using GigUnite.Data;
 using GigUnite.Models;
+using static GigUnite.DAO.GigDAO;
 
 namespace GigUnite.Controllers
 {
     public class GigsController : Controller
     {
         private readonly ApplicationDbContext _context;
+		private readonly UserManager<IdentityUser> _userManager;
 
-        public GigsController(ApplicationDbContext context)
+		public GigsController(ApplicationDbContext context, UserManager<IdentityUser> userManager)
         {
             _context = context;
-        }
+			_userManager = userManager;
+		}
 
         // GET: Gigs
         public async Task<IActionResult> Index()
@@ -46,10 +50,22 @@ namespace GigUnite.Controllers
         }
 
         // GET: Gigs/Create
-        public IActionResult Create()
+        public async Task<IActionResult> Create()
         {
-            ViewData["ProfileId"] = new SelectList(_context.Profile, "Id", "City");
-            return View();
+			string userId = _userManager.GetUserId(HttpContext.User);
+
+			var profile = await _context.Profile
+				.FirstOrDefaultAsync(m => m.UserId == userId);
+
+			var profileId = profile.Id;
+
+			var genres = from m in _context.Genre
+						 select m.Name;
+
+			ViewBag.Genres = genres;
+			ViewBag.ProfileId = profileId;
+
+			return View();
         }
 
         // POST: Gigs/Create
@@ -57,15 +73,20 @@ namespace GigUnite.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,Band,Date,Venue,Price,Location,ProfileId")] Gig gig)
+        public async Task<IActionResult> Create([Bind("Id,Band,Date,Venue,Price,Location,ProfileId")] Gig gig, List<string> genres)
         {
             if (ModelState.IsValid)
             {
                 _context.Add(gig);
                 await _context.SaveChangesAsync();
-                return RedirectToAction(nameof(Index));
+
+				foreach (var genre in genres)
+				{
+					AddGenresToGig(gig.Id, genre);
+				}
+
+				return RedirectToAction(nameof(Index));
             }
-            ViewData["ProfileId"] = new SelectList(_context.Profile, "Id", "City", gig.ProfileId);
             return View(gig);
         }
 
