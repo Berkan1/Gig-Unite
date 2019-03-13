@@ -9,10 +9,12 @@ using Microsoft.AspNetCore.Identity;
 using GigUnite.Data;
 using GigUnite.Models;
 using static GigUnite.DAO.GigDAO;
+using Microsoft.AspNetCore.Authorization;
 
 namespace GigUnite.Controllers
 {
-    public class GigsController : Controller
+	[Authorize]
+	public class GigsController : Controller
     {
         private readonly ApplicationDbContext _context;
 		private readonly UserManager<IdentityUser> _userManager;
@@ -46,11 +48,80 @@ namespace GigUnite.Controllers
                 return NotFound();
             }
 
-            return View(gig);
+			var gigGenres = from m in _context.GigGenre
+						   where m.GigId == gig.Id
+						   select m.Genre.Name;
+
+			ViewBag.GigGenres = gigGenres;
+
+			var commentMessages = from m in _context.Comment
+								  where m.GigId == gig.Id
+								  select m.Message;
+
+			var messages = new List<string>();
+
+			foreach (string comment in commentMessages)
+			{
+				messages.Add(comment);
+			}
+
+			ViewBag.Messages = messages;
+
+			var commentTimePosted = from m in _context.Comment
+									where m.GigId == gig.Id
+									select m.TimePosted;
+
+			var timesPosted = new List<DateTime>();
+
+			foreach (DateTime times in commentTimePosted)
+			{
+				timesPosted.Add(times);
+			}
+
+			ViewBag.TimesPosted = timesPosted;
+
+			var commentUser = from m in _context.Comment
+									where m.GigId == gig.Id
+									select m.UserId;
+
+			var profiles = new List<string>();
+
+			foreach (int user in commentUser)
+			{
+				var profileUser = from m in _context.Profile
+								  where m.Id == user
+								  select m.Displayname;
+
+				string first = profileUser.First();
+
+				profiles.Add(first);
+			}
+
+			ViewBag.Profiles = profiles;
+
+			return View(gig);
         }
 
-        // GET: Gigs/Create
-        public async Task<IActionResult> Create()
+		[HttpPost]
+		[ValidateAntiForgeryToken]
+		public async Task<IActionResult> Details(string message, int gigId)
+		{
+			string userId = _userManager.GetUserId(HttpContext.User);
+
+			var profile = await _context.Profile
+				.FirstOrDefaultAsync(m => m.UserId == userId);
+
+			var profileId = profile.Id;
+
+			DateTime timeNow = DateTime.Now;
+
+			AddComment(profileId, gigId, timeNow, message);
+
+			return RedirectToAction("Details", new { id = gigId });
+		}
+
+		// GET: Gigs/Create
+		public async Task<IActionResult> Create()
         {
 			string userId = _userManager.GetUserId(HttpContext.User);
 

@@ -216,5 +216,33 @@ namespace GigUnite.DataAccess
 				return result;
 			}
 		}
+
+		public static int AddComment(string sql, int profileId, int gigId, DateTime timePosted, string message)
+		{
+			using (SqlConnection cnn = new SqlConnection(connect))
+			{
+				SqlCommand command = new SqlCommand(sql, cnn);
+				command.Parameters.Add("@ProfileId", SqlDbType.NVarChar);
+				command.Parameters["@ProfileId"].Value = profileId;
+				command.Parameters.Add("@GigId", SqlDbType.NVarChar);
+				command.Parameters["@GigId"].Value = gigId;
+				command.Parameters.Add("@Message", SqlDbType.NVarChar);
+				command.Parameters["@Message"].Value = message;
+				command.Parameters.Add("@TimePosted", SqlDbType.NVarChar);
+				command.Parameters["@TimePosted"].Value = timePosted;
+				int result;
+
+				try
+				{
+					cnn.Open();
+					result = command.ExecuteNonQuery();
+				}
+				catch (Exception ex)
+				{
+					throw;
+				}
+				return result;
+			}
+		}
 	}
 }

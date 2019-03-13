@@ -20,5 +20,11 @@ namespace GigUnite.DAO
 
 			return SqlDataAccess.SaveIds(sql2, gigId, theId);
 		}
+		public static int AddComment(int profileId, int gigId, DateTime timePosted, string message)
+		{
+			string sql = @"INSERT INTO dbo.Comment (Message, TimePosted, UserId, GigId) VALUES (@Message, @TimePosted, @ProfileId, @GigId);";
+
+			return SqlDataAccess.AddComment(sql, profileId, gigId, timePosted, message);
+		}
 	}
 }

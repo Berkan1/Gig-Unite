@@ -5,11 +5,16 @@
 	Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h1>Details</h1>
+<h1>Details for @Html.DisplayFor(model => model.Band) gig</h1>
+<hr />
 
+@*<div class="container">
+		<div class="row">
+
+		</div>
+	</div>
+*@
 <div>
-	<h4>Gig</h4>
-	<hr />
 	<dl class="row">
 		<dt class="col-sm-2">
 			@Html.DisplayNameFor(model => model.Band)
@@ -43,8 +48,39 @@
 		</dd>
 	</dl>
 </div>
+<div class="col-xs-6 col-sm-6 col-md-4 col-lg-4">
+	<p><b>Genres</b></p>
+	@foreach (string genre in ViewBag.GigGenres)
+	{
+		<span class="tags">@genre</span>
+	}
+</div>
+
+@for (var i = 0; i < ViewBag.Messages.Count; i++)
+{
+	<span>Posted by</span> @ViewBag.Profiles[i] <span> on </span> @ViewBag.TimesPosted[i]<br />
+	<p>@ViewBag.Messages[i]</p><br />
+}
+
+<div class="row">
+	<div class="col-md-4">
+		<form asp-action="Details">
+			<div class="form-group">
+				<label>Comment:</label>
+				<textarea name="message" id="message" class="form-control" rows="5"></textarea>
+			</div>
+			<div class="form-group">
+				<input type="hidden" name="gigId" id="gigId" value=@Model.Id readonly />
+			</div>
+			<div class="form-group">
+				<input type="submit" value="Add Comment" class="btn btn-primary" />
+			</div>
+		</form>
+	</div>
+</div>
 
 <div id="map"></div>
+
 <script>
 
 	var map;
