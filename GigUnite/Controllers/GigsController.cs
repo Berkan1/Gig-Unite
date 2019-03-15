@@ -113,7 +113,7 @@ namespace GigUnite.Controllers
 
 			var profileId = profile.Id;
 
-			DateTime timeNow = DateTime.Now;
+			string timeNow = DateTime.Now.ToString("yyyy'-'MM'-'dd' 'HH':'mm':'ss");
 
 			AddComment(profileId, gigId, timeNow, message);
 

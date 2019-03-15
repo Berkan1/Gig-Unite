@@ -93,6 +93,10 @@ p.rank5 {
 	background-image: linear-gradient(to right, #78FF60, #FFFFFF);
 }
 
+.medium {
+	font-size: 150%;
+}
+
 .large {
 	font-size: 2vw;
 }
@@ -106,6 +110,13 @@ img.profile {
 	padding-top: 10px;
 	padding-bottom: 10px;
 	border-radius: 50%;
+	width: 100%;
+}
+
+img.marker {
+	padding-top: 5px;
+	height: 40px;
+	width: 25px;
 }
 
 input[type=submit] {

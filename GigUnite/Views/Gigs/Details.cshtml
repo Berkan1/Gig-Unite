@@ -8,78 +8,58 @@
 <h1>Details for @Html.DisplayFor(model => model.Band) gig</h1>
 <hr />
 
-@*<div class="container">
-		<div class="row">
-
+<div class="container">
+	<div class="row">
+		<div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
+			<b class="medium">@Html.DisplayNameFor(model => model.Band)</b><br />
+			<p class="medium">@Html.DisplayFor(model => model.Band)</p>
+			<b class="medium">@Html.DisplayNameFor(model => model.Date)</b><br />
+			<p class="medium">@Html.DisplayFor(model => model.Date)</p>
+			<b class="medium">@Html.DisplayNameFor(model => model.Venue)</b><br />
+			<p class="medium" id="location">@Html.DisplayFor(model => model.Venue)</p>
+			<b class="medium">@Html.DisplayNameFor(model => model.Price)</b><br />
+			<p class="medium">£@Html.DisplayFor(model => model.Price)</p>
+			<b class="medium">Genres</b><br />
+			@foreach (string genre in ViewBag.GigGenres)
+			{
+				<span class="tags">@genre</span>
+			}
+		</div>
+		<div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
+			<div id="map"></div>
+			<img src="http://www.clker.com/cliparts/e/3/F/I/0/A/google-maps-marker-for-residencelamontagne-hi.png" class="marker">
+			<span> - venue location</span><br />
+			<img src="https://cdn.pixabay.com/photo/2014/04/03/10/03/google-309739_960_720.png" class="marker">
+			<span> - suggested meeting points</span>
 		</div>
 	</div>
-*@
-<div>
-	<dl class="row">
-		<dt class="col-sm-2">
-			@Html.DisplayNameFor(model => model.Band)
-		</dt>
-		<dd class="col-sm-10">
-			@Html.DisplayFor(model => model.Band)
-		</dd>
-		<dt class="col-sm-2">
-			@Html.DisplayNameFor(model => model.Date)
-		</dt>
-		<dd class="col-sm-10">
-			@Html.DisplayFor(model => model.Date)
-		</dd>
-		<dt class="col-sm-2">
-			@Html.DisplayNameFor(model => model.Venue)
-		</dt>
-		<dd class="col-sm-10">
-			<p id="location">@Html.DisplayFor(model => model.Venue)</p>
-		</dd>
-		<dt class="col-sm-2">
-			@Html.DisplayNameFor(model => model.Price)
-		</dt>
-		<dd class="col-sm-10">
-			@Html.DisplayFor(model => model.Price)
-		</dd>
-		<dt class="col-sm-2">
-			Posted by
-		</dt>
-		<dd class="col-sm-10">
-			<a class="nav-link text-dark" asp-area="" asp-controller="Profiles" asp-action="Details" asp-route-id="@Model.Profile.Displayname">@Html.DisplayFor(model => model.Profile.Displayname)</a>
-		</dd>
-	</dl>
-</div>
-<div class="col-xs-6 col-sm-6 col-md-4 col-lg-4">
-	<p><b>Genres</b></p>
-	@foreach (string genre in ViewBag.GigGenres)
+	This gig advert was posted by <a asp-area="" asp-controller="Profiles" asp-action="Details" asp-route-id="@Model.Profile.Displayname">@Html.DisplayFor(model => model.Profile.Displayname)</a><br />
+	<hr />
+	<h1>Discussion board</h1>
+	@for (var i = 0; i < ViewBag.Messages.Count; i++)
 	{
-		<span class="tags">@genre</span>
+		<b><a asp-area="" asp-controller="Profiles" asp-action="Details" asp-route-id="@ViewBag.Profiles[i]">@ViewBag.Profiles[i] </a></b>
+		<b> on @ViewBag.TimesPosted[i]</b><br />
+		<p>@ViewBag.Messages[i]</p>
 	}
-</div>
 
-@for (var i = 0; i < ViewBag.Messages.Count; i++)
-{
-	<span>Posted by</span> @ViewBag.Profiles[i] <span> on </span> @ViewBag.TimesPosted[i]<br />
-	<p>@ViewBag.Messages[i]</p><br />
-}
-
-<div class="row">
-	<div class="col-md-4">
-		<form asp-action="Details">
-			<div class="form-group">
-				<label>Comment:</label>
-				<textarea name="message" id="message" class="form-control" rows="5"></textarea>
-			</div>
-			<div class="form-group">
-				<input type="hidden" name="gigId" id="gigId" value=@Model.Id readonly />
-			</div>
-			<div class="form-group">
-				<input type="submit" value="Add Comment" class="btn btn-primary" />
-			</div>
-		</form>
+	<div class="row">
+		<div class="col-md-4">
+			<form asp-action="Details">
+				<div class="form-group">
+					<b><label>Comment:</label></b>
+					<textarea name="message" id="message" class="form-control" rows="5"></textarea>
+				</div>
+				<div class="form-group">
+					<input type="hidden" name="gigId" id="gigId" value=@Model.Id readonly />
+				</div>
+				<div class="form-group">
+					<input type="submit" value="Add Comment" class="btn btn-primary" />
+				</div>
+			</form>
+		</div>
 	</div>
 </div>
-
-<div id="map"></div>
 
 <script>
 
@@ -100,7 +80,7 @@
 		geocoder.geocode({ 'address': address }, function (results, status) {
 			if (status === 'OK') {
 				resultsMap.setCenter(results[0].geometry.location);
-				resultsMap.setZoom(10);
+				resultsMap.setZoom(12);
 				var marker = new google.maps.Marker({
 					map: resultsMap,
 					position: results[0].geometry.location
@@ -110,7 +90,7 @@
 	}
 
 </script>
-<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDjXWcyMTwQFjJ5gaK2c3PzHRZOenKrTLA&libraries=places&callback=showMap" async defer></script>
+<script src="https://maps.googleapis.com/maps/api/js?key=YOUR_API_KEY&libraries=places&callback=showMap" async defer></script>
 
 <div>
 	<a asp-action="Edit" asp-route-id="@Model.Id">Edit</a> |

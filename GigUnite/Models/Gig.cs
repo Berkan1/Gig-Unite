@@ -11,6 +11,7 @@ namespace GigUnite.Models
 		public int Id { get; set; }
 		[Required]
 		[StringLength(50, ErrorMessage = "Band name can't exceed 50 characters")]
+		[Display(Name = "Artist/Band")]
 		public string Band { get; set; }
 		[DataType(DataType.Date)]
 		public DateTime Date { get; set; }

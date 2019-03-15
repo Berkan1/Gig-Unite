@@ -217,7 +217,7 @@ namespace GigUnite.DataAccess
 			}
 		}
 
-		public static int AddComment(string sql, int profileId, int gigId, DateTime timePosted, string message)
+		public static int AddComment(string sql, int profileId, int gigId, string timePosted, string message)
 		{
 			using (SqlConnection cnn = new SqlConnection(connect))
 			{
