@@ -278,5 +278,11 @@ namespace GigUnite.Controllers
         {
             return _context.Gig.Any(e => e.Id == id);
         }
-    }
+
+		public IActionResult AddInterest(int id)
+		{
+			int parameter = id;
+			return RedirectToAction("Edit", new { id = parameter });
+		}
+	}
 }

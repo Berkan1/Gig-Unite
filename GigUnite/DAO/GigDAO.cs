@@ -36,10 +36,20 @@ namespace GigUnite.DAO
 				string sql = @"SELECT dbo.AspNetUsers.Email FROM dbo.AspNetUsers 
 								INNER JOIN dbo.Profile ON dbo.AspNetUsers.Id=dbo.Profile.UserId 
 								INNER JOIN dbo.ProfileGenre ON dbo.Profile.Id=dbo.ProfileGenre.ProfileId
-								INNER JOIN dbo.Genre ON dbo.ProfileGenre.GenreId=dbo.Genre.Id WHERE dbo.Genre.Name = @Genre;";
+								INNER JOIN dbo.Genre ON dbo.ProfileGenre.GenreId=dbo.Genre.Id WHERE dbo.Genre.Name = @Comparison;";
 
 				recipients.AddRange(SqlDataAccess.GetEmails(sql, genre));
 			}
+
+			string sql2 = @"SELECT dbo.AspNetUsers.Email FROM dbo.AspNetUsers 
+								INNER JOIN dbo.Profile ON dbo.AspNetUsers.Id=dbo.Profile.UserId
+								WHERE UPPER(dbo.Profile.Band1) = @Comparison 
+								OR UPPER(dbo.Profile.Band2) = @Comparison 
+								OR UPPER(dbo.Profile.Band3) = @Comparison
+								OR UPPER(dbo.Profile.Band4) = @Comparison
+								OR UPPER(dbo.Profile.Band5) = @Comparison;";
+
+			recipients.AddRange(SqlDataAccess.GetEmails(sql2, bandName.ToUpper()));
 
 			return recipients.Distinct().ToList();
 		}

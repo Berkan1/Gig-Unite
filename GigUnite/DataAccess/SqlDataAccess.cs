@@ -245,13 +245,13 @@ namespace GigUnite.DataAccess
 			}
 		}
 
-		public static List<string> GetEmails(string sql, string genre)
+		public static List<string> GetEmails(string sql, string comparison)
 		{
 			using (SqlConnection cnn = new SqlConnection(connect))
 			{
 				SqlCommand command = new SqlCommand(sql, cnn);
-				command.Parameters.Add("@Genre", SqlDbType.NVarChar);
-				command.Parameters["@Genre"].Value = genre;
+				command.Parameters.Add("@Comparison", SqlDbType.NVarChar);
+				command.Parameters["@Comparison"].Value = comparison;
 				List<string> recipients = new List<string>();
 
 				try
