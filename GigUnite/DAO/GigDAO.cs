@@ -26,5 +26,22 @@ namespace GigUnite.DAO
 
 			return SqlDataAccess.AddComment(sql, profileId, gigId, timePosted, message);
 		}
+
+		public static List<string> GetEmailList(string bandName, List<string> genres)
+		{
+			List<string> recipients = new List<string>();
+
+			foreach (var genre in genres)
+			{
+				string sql = @"SELECT dbo.AspNetUsers.Email FROM dbo.AspNetUsers 
+								INNER JOIN dbo.Profile ON dbo.AspNetUsers.Id=dbo.Profile.UserId 
+								INNER JOIN dbo.ProfileGenre ON dbo.Profile.Id=dbo.ProfileGenre.ProfileId
+								INNER JOIN dbo.Genre ON dbo.ProfileGenre.GenreId=dbo.Genre.Id WHERE dbo.Genre.Name = @Genre;";
+
+				recipients.AddRange(SqlDataAccess.GetEmails(sql, genre));
+			}
+
+			return recipients.Distinct().ToList();
+		}
 	}
 }

@@ -36,7 +36,7 @@ namespace GigUnite.DataAccess
 				try
 				{
 					cnn.Open();
-					result = (int)command.ExecuteScalar(); ;
+					result = (int)command.ExecuteScalar();
 				}
 				catch (Exception ex)
 				{
@@ -242,6 +242,35 @@ namespace GigUnite.DataAccess
 					throw;
 				}
 				return result;
+			}
+		}
+
+		public static List<string> GetEmails(string sql, string genre)
+		{
+			using (SqlConnection cnn = new SqlConnection(connect))
+			{
+				SqlCommand command = new SqlCommand(sql, cnn);
+				command.Parameters.Add("@Genre", SqlDbType.NVarChar);
+				command.Parameters["@Genre"].Value = genre;
+				List<string> recipients = new List<string>();
+
+				try
+				{
+					cnn.Open();
+					SqlDataReader reader = command.ExecuteReader();
+
+					while (reader.Read())
+					{
+						string email = (string)reader["Email"];
+						recipients.Add(email);
+					}
+				}
+				catch (Exception ex)
+				{
+					throw;
+				}
+
+				return recipients;
 			}
 		}
 	}

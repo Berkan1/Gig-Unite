@@ -10,6 +10,8 @@ using GigUnite.Data;
 using GigUnite.Models;
 using static GigUnite.DAO.GigDAO;
 using Microsoft.AspNetCore.Authorization;
+using MimeKit;
+using MailKit.Net.Smtp;
 
 namespace GigUnite.Controllers
 {
@@ -151,9 +153,37 @@ namespace GigUnite.Controllers
                 _context.Add(gig);
                 await _context.SaveChangesAsync();
 
+				string gigGenres = "| ";
+
 				foreach (var genre in genres)
 				{
 					AddGenresToGig(gig.Id, genre);
+					gigGenres += genre + " | ";
+				}
+
+				var profile = await _context.Profile
+				.FirstOrDefaultAsync(m => m.Id == gig.ProfileId);
+
+				var recipients = GetEmailList(gig.Band, genres);
+
+				var message = new MimeMessage();
+				message.From.Add(new MailboxAddress("GigUnite", "gigunite@hotmail.com"));
+				foreach (var recipient in recipients)
+				{
+					message.Bcc.Add(new MailboxAddress(recipient));
+				}
+				message.Subject = "New Gig Advert for " + gig.Band;
+				message.Body = new TextPart("plain")
+				{
+					Text = "Hi! A new gig advert was posted by " + profile.Displayname + " with the following details: \r\n \r\n Artist/Band: " + gig.Band +
+						   "\r\n Date: " + gig.Date.ToString("dd/MM/yyyy") + "\r\n Venue: " + gig.Venue + "\r\n Price: " + gig.Price + "\r\n Genres: " + gigGenres
+				};
+				using (var client = new SmtpClient())
+				{
+					client.Connect("smtp.live.com", 587, false);
+					client.Authenticate("gigunite@hotmail.com", "PASSWORD");
+					client.Send(message);
+					client.Disconnect(true);
 				}
 
 				return RedirectToAction(nameof(Index));
