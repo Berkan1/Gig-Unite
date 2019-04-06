@@ -273,5 +273,31 @@ namespace GigUnite.DataAccess
 				return recipients;
 			}
 		}
+
+		public static int SetInterest(string sql, int gigId, int profileId, string level)
+		{
+			using (SqlConnection cnn = new SqlConnection(connect))
+			{
+				SqlCommand command = new SqlCommand(sql, cnn);
+				command.Parameters.Add("@Status", SqlDbType.NVarChar);
+				command.Parameters["@Status"].Value = level;
+				command.Parameters.Add("@EventId", SqlDbType.NVarChar);
+				command.Parameters["@EventId"].Value = gigId;
+				command.Parameters.Add("@UserId", SqlDbType.NVarChar);
+				command.Parameters["@UserId"].Value = profileId;
+				int result;
+
+				try
+				{
+					cnn.Open();
+					result = command.ExecuteNonQuery();
+				}
+				catch (Exception ex)
+				{
+					throw;
+				}
+				return result;
+			}
+		}
 	}
 }

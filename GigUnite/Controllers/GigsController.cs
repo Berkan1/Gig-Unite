@@ -50,6 +50,16 @@ namespace GigUnite.Controllers
                 return NotFound();
             }
 
+			ViewBag.InterestLevel = "N/A";
+
+			if (_context.Interest.Any(m => m.EventId == id))
+			{
+				var interestLevel = await _context.Interest
+				.FirstOrDefaultAsync(m => m.EventId == id);
+
+				ViewBag.InterestLevel = interestLevel.Status;
+			}
+
 			var gigGenres = from m in _context.GigGenre
 						   where m.GigId == gig.Id
 						   select m.Genre.Name;
@@ -279,10 +289,18 @@ namespace GigUnite.Controllers
             return _context.Gig.Any(e => e.Id == id);
         }
 
-		public IActionResult AddInterest(int id)
+		public async Task<IActionResult> AddInterest(int gigId, string level)
 		{
-			int parameter = id;
-			return RedirectToAction("Edit", new { id = parameter });
+			string userId = _userManager.GetUserId(HttpContext.User);
+
+			var profile = await _context.Profile
+				.FirstOrDefaultAsync(m => m.UserId == userId);
+
+			var profileId = profile.Id;
+
+			SetInterest(gigId, profileId, level);
+
+			return RedirectToAction("Edit", new { id = gigId });
 		}
 	}
 }

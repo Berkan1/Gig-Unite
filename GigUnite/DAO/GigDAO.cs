@@ -53,5 +53,12 @@ namespace GigUnite.DAO
 
 			return recipients.Distinct().ToList();
 		}
+		
+		public static int SetInterest(int gigId, int profileId, string level)
+		{
+			string sql = @"INSERT INTO dbo.Interest (Status, EventId, UserId) VALUES (@Status, @EventId, @UserId);";
+
+			return SqlDataAccess.SetInterest(sql, gigId, profileId, level);
+		}
 	}
 }
