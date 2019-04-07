@@ -35,3 +35,19 @@ function calculateAge(dob) {
 
     document.getElementById("age").innerHTML = "Age: " + age;
 }
+
+function maybeOver() {
+    document.getElementById("interested").src = "/images/orange_bell.png";
+}
+
+function maybeOut() {
+    document.getElementById("interested").src = "/images/blank_bell.png";
+}
+
+function goingOver() {
+    document.getElementById("going").src = "/images/orange_tick.png";
+}
+
+function goingOut() {
+    document.getElementById("going").src = "/images/blank_tick.png";
+}

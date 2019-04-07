@@ -26,15 +26,34 @@
 			}
 		</div>
 		<div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
-			<span>
-				<button class="btn btn-info" type="button" id="interested"
-						onclick="location.href='@Url.Action("AddInterest", "Gigs", new { gigId = Model.Id, level = "Interested" })'">I'm interested!</button>
-			</span>
-			<span>
-				<button class="btn btn-info" type="button" id="going"
-						onclick="location.href='@Url.Action("AddInterest", "Gigs", new { gigId = Model.Id, level = "Going" })'">I'm going!</button>
-			</span>
-			<p>I am @ViewBag.InterestLevel</p>
+			@if (ViewBag.InterestLevel == "N/A")
+			{
+				<span>
+					<button class="btn btn-info" type="button" id="interested"
+							onclick="location.href='@Url.Action("AddInterest", "Gigs", new { gigId = Model.Id, level = "Interested" })'">
+						I'm interested!
+					</button>
+				</span>
+				<span>
+					<button class="btn btn-info" type="button" id="going"
+							onclick="location.href='@Url.Action("AddInterest", "Gigs", new { gigId = Model.Id, level = "Going" })'">
+						I'm going!
+					</button>
+				</span><br />
+			}
+			else
+			{
+				if (ViewBag.InterestLevel == "Interested")
+				{
+					<p><b>You are interested in this gig</b></p>
+				}
+				else
+				{
+					<p><b>You are going to this gig</b></p>
+				}
+			}
+			<img src="~/images/blank_bell.png" class="interest" id="interested" onmouseover="maybeOver()" Onmouseout="maybeOut()">
+			<img src="~/images/blank_tick.png" class="interest" id="going" onmouseover="goingOver()" Onmouseout="goingOut()">
 			<div id="map"></div>
 			<img src="~/images/red-marker.png" class="marker">
 			<span> - venue location</span><br />

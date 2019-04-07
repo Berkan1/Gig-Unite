@@ -119,6 +119,12 @@ img.marker {
 	width: 25px;
 }
 
+img.interest {
+	padding-bottom: 5px;
+	height: 50px;
+	width: 40px;
+}
+
 input[type=submit] {
 	margin: auto;
 	display: block;

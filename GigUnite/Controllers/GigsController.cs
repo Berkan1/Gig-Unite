@@ -300,7 +300,7 @@ namespace GigUnite.Controllers
 
 			SetInterest(gigId, profileId, level);
 
-			return RedirectToAction("Edit", new { id = gigId });
+			return RedirectToAction("Details", new { id = gigId });
 		}
 	}
 }
