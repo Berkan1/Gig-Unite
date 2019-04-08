@@ -18,6 +18,18 @@ html {
   }
 }
 
+table.attendees {
+	display: table;
+}
+
+table.attendees tr {
+	display: table-cell;
+}
+
+table.attendees tr td {
+	display: block;
+}
+
 .border-top {
   border-top: 1px solid #e5e5e5;
 }
@@ -60,9 +72,10 @@ h1 {
 }
 
 span.tags {
-	border: 2px solid red;
+	border-style: solid;
+	border-color: #000000;
 	border-radius: 12px;
-	background-color: #FB8E87;
+	background-color: #FE9901;
 	padding-left: 10px;
 	padding-right: 10px;
 	line-height: 2;
@@ -145,7 +158,16 @@ div.notifications {
 	justify-content: flex-end;
 }
 
+div#hidden {
+	visibility: hidden;
+}
+
 #map {
 	height: 400px;
 	width: 100%;
+}
+
+.bluebutton {
+	background-color: dodgerblue;
+	color: white;
 }

@@ -33,59 +33,87 @@
 			<span> - suggested meeting points</span>
 		</div>
 	</div>
-	@if (ViewBag.InterestLevel == "Interested")
-	{
-		<span>
-			<img src="~/images/blank_bell.png" class="interest" id="interested" onmouseover="maybeOver()" Onmouseout="maybeOut()"
-				 onclick="location.href='@Url.Action("RemoveInterest", "Gigs", new { gigId = Model.Id})'">
-		</span>
-	}
-	else
-	{
-		<span>
-			<img src="~/images/blank_bell.png" class="interest" id="interested" onmouseover="maybeOver()" Onmouseout="maybeOut()"
-				 onclick="location.href='@Url.Action("AddInterest", "Gigs", new { gigId = Model.Id, level = "Interested" })'">
-		</span>
-	}
-	@if (ViewBag.InterestLevel == "N/A")
-	{
-		<b><span id="notification">Interested?</span></b>
-	}
-	else
-	{
-		if (ViewBag.InterestLevel == "Interested")
-		{
-			<b><span id="notification">You are interested in this gig</span></b>
-		}
-	}
-	<br />
-	@if (ViewBag.InterestLevel == "Going")
-	{
-		<span>
-			<img src="~/images/blank_tick.png" class="interest" id="going" onmouseover="goingOver()" Onmouseout="goingOut()"
-				 onclick="location.href='@Url.Action("RemoveInterest", "Gigs", new { gigId = Model.Id})'">
-		</span>
-	}
-	else
-	{
-		<span>
-			<img src="~/images/blank_tick.png" class="interest" id="going" onmouseover="goingOver()" Onmouseout="goingOut()"
-				 onclick="location.href='@Url.Action("AddInterest", "Gigs", new { gigId = Model.Id, level = "Going" })'">
-		</span>
-	}
-	@if (ViewBag.InterestLevel == "N/A")
-	{
-		<b><span>Going?</span></b>
-	}
-	else
-	{
-		if (ViewBag.InterestLevel == "Going")
-		{
-			<b><span id="notification">You are going to this gig</span></b>
-		}
-	}
-	<br />
-	This gig advert was posted by <a asp-area="" asp-controller="Profiles" asp-action="Details" asp-route-id="@Model.Profile.Displayname">@Html.DisplayFor(model => model.Profile.Displayname)</a><br />
+	<div class="row">
+		<div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
+			@if (ViewBag.InterestLevel == "Interested")
+			{
+				<span>
+					<img src="~/images/blank_bell.png" class="interest" id="interested" onmouseover="maybeOver()" Onmouseout="maybeOut()"
+						 onclick="location.href='@Url.Action("RemoveInterest", "Gigs", new { gigId = Model.Id})'">
+				</span>
+			}
+			else
+			{
+				<span>
+					<img src="~/images/blank_bell.png" class="interest" id="interested" onmouseover="maybeOver()" Onmouseout="maybeOut()"
+						 onclick="location.href='@Url.Action("AddInterest", "Gigs", new { gigId = Model.Id, level = "Interested" })'">
+				</span>
+			}
+			@if (ViewBag.InterestLevel == "N/A")
+			{
+				<b><span id="notification">Interested?</span></b>
+			}
+			else
+			{
+				if (ViewBag.InterestLevel == "Interested")
+				{
+					<b><span id="notification">You are interested in this gig</span></b>
+				}
+			}
+			<br />
+			@if (ViewBag.InterestLevel == "Going")
+			{
+				<span>
+					<img src="~/images/blank_tick.png" class="interest" id="going" onmouseover="goingOver()" Onmouseout="goingOut()"
+						 onclick="location.href='@Url.Action("RemoveInterest", "Gigs", new { gigId = Model.Id})'">
+				</span>
+			}
+			else
+			{
+				<span>
+					<img src="~/images/blank_tick.png" class="interest" id="going" onmouseover="goingOver()" Onmouseout="goingOut()"
+						 onclick="location.href='@Url.Action("AddInterest", "Gigs", new { gigId = Model.Id, level = "Going" })'">
+				</span>
+			}
+			@if (ViewBag.InterestLevel == "N/A")
+			{
+				<b><span>Going?</span></b>
+			}
+			else
+			{
+				if (ViewBag.InterestLevel == "Going")
+				{
+					<b><span id="notification">You are going to this gig</span></b>
+				}
+			}
+			<br />
+			<br />
+			<b>This gig advert was posted by <a asp-area="" asp-controller="Profiles" asp-action="Details" asp-route-id="@Model.Profile.Displayname">
+				@Html.DisplayFor(model => model.Profile.Displayname)</a></b><br />
+		</div>
+		<div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
+			<br />
+			<span>@ViewBag.Going.Count going, @ViewBag.Interested.Count interested. </span><span><button class="bluebutton" onclick="showIt()">(Show)</button></span>
+			<div class="row" id="hidden">
+				<div class="col-xs-4 col-sm-4 col-md-4 col-lg-4">
+					<b>Going</b><br />
+					 @for (var i = 0; i < ViewBag.Going.Count; i++)
+					 {
+						<a asp-area="" asp-controller="Profiles" asp-action="Details" asp-route-id="@ViewBag.Going[i]">@ViewBag.Going[i] </a>
+						<br />
+					 }
+				</div>
+				<div class="col-xs-4 col-sm-4 col-md-4 col-lg-4">
+					<b>Interested</b><br />
+					@for (var i = 0; i < ViewBag.Interested.Count; i++)
+					{
+						<a asp-area="" asp-controller="Profiles" asp-action="Details" asp-route-id="@ViewBag.Interested[i]">@ViewBag.Interested[i] </a>
+						<br />
+					}
+				</div>
+			</div>
+		</div>
+	</div>
 	<hr />
 	<h1>Discussion board</h1>
 	@for (var i = 0; i < ViewBag.Messages.Count; i++)
@@ -113,38 +141,38 @@
 	</div>
 </div>
 
-<script>
+		<script>
 
-	var map;
+			var map;
 
-	function showMap() {
-		var map = new google.maps.Map(document.getElementById('map'), {
-			zoom: 8,
-			center: { lat: 51.5074, lng: 0.1278 }
-		});
-		var geocoder = new google.maps.Geocoder();
+			function showMap() {
+				var map = new google.maps.Map(document.getElementById('map'), {
+					zoom: 8,
+					center: { lat: 51.5074, lng: 0.1278 }
+				});
+				var geocoder = new google.maps.Geocoder();
 
-		geocodeAddress(geocoder, map);
-	}
+				geocodeAddress(geocoder, map);
+			}
 
-	function geocodeAddress(geocoder, resultsMap) {
-		var address = document.getElementById('location').innerHTML;
-		geocoder.geocode({ 'address': address }, function (results, status) {
-			if (status === 'OK') {
-				resultsMap.setCenter(results[0].geometry.location);
-				resultsMap.setZoom(12);
-				var marker = new google.maps.Marker({
-					map: resultsMap,
-					position: results[0].geometry.location
+			function geocodeAddress(geocoder, resultsMap) {
+				var address = document.getElementById('location').innerHTML;
+				geocoder.geocode({ 'address': address }, function (results, status) {
+					if (status === 'OK') {
+						resultsMap.setCenter(results[0].geometry.location);
+						resultsMap.setZoom(12);
+						var marker = new google.maps.Marker({
+							map: resultsMap,
+							position: results[0].geometry.location
+						});
+					}
 				});
 			}
-		});
-	}
 
-</script>
-<script src="https://maps.googleapis.com/maps/api/js?key=YOUR_API_KEY&libraries=places&callback=showMap" async defer></script>
+		</script>
+		<script src="https://maps.googleapis.com/maps/api/js?key=YOUR_API_KEY&libraries=places&callback=showMap" async defer></script>
 
-<div>
-	<a asp-action="Edit" asp-route-id="@Model.Id">Edit</a> |
-	<a asp-action="Index">Back to List</a>
-</div>
+		<div>
+			<a asp-action="Edit" asp-route-id="@Model.Id">Edit</a> |
+			<a asp-action="Index">Back to List</a>
+		</div>

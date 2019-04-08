@@ -42,7 +42,14 @@ namespace GigUnite.Controllers
                 return NotFound();
             }
 
-            var gig = await _context.Gig
+			string userId = _userManager.GetUserId(HttpContext.User);
+
+			var profile = await _context.Profile
+				.FirstOrDefaultAsync(m => m.UserId == userId);
+
+			var profileId = profile.Id;
+
+			var gig = await _context.Gig
                 .Include(g => g.Profile)
                 .FirstOrDefaultAsync(m => m.Id == id);
             if (gig == null)
@@ -52,10 +59,10 @@ namespace GigUnite.Controllers
 
 			ViewBag.InterestLevel = "N/A";
 
-			if (_context.Interest.Any(m => m.EventId == id))
+			if (_context.Interest.Any(m => m.EventId == id && m.UserId == profile.Id))
 			{
 				var interestLevel = await _context.Interest
-				.FirstOrDefaultAsync(m => m.EventId == id);
+				.FirstOrDefaultAsync(m => m.EventId == id && m.UserId == profile.Id);
 
 				ViewBag.InterestLevel = interestLevel.Status;
 			}
@@ -110,6 +117,38 @@ namespace GigUnite.Controllers
 			}
 
 			ViewBag.Profiles = profiles;
+
+			var peopleGoing = new List<string>();
+			var peopleInterested = new List<string>();
+
+			var idGoing = from m in _context.Interest
+							  where m.EventId == gig.Id
+							  && m.Status == "Going"
+							  select m.UserId;
+
+			var idInterested = from m in _context.Interest
+							   where m.EventId == gig.Id
+							   && m.Status == "Interested"
+							   select m.UserId;
+
+			foreach (int person in idGoing)
+			{
+				var personGoing = await _context.Profile
+				.FirstOrDefaultAsync(m => m.Id == person);
+
+				peopleGoing.Add(personGoing.Displayname);
+			}
+
+			foreach (int person in idInterested)
+			{
+				var personGoing = await _context.Profile
+				.FirstOrDefaultAsync(m => m.Id == person);
+
+				peopleInterested.Add(personGoing.Displayname);
+			}
+
+			ViewBag.Going = peopleGoing;
+			ViewBag.Interested = peopleInterested;
 
 			return View(gig);
         }

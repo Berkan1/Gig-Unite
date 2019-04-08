@@ -80,3 +80,7 @@ function goingOut() {
         document.getElementById("going").src = "/images/orange_tick.png";
     }
 }
+
+function showIt() {
+    document.getElementById("hidden").style.visibility = 'visible';
+}
