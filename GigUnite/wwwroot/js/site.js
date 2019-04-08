@@ -4,6 +4,15 @@
 // Write your JavaScript code.
 $(document).ready(function () {
 
+    if (document.getElementById("notification")) {
+        if (document.getElementById("notification").innerHTML == "You are interested in this gig") {
+            document.getElementById("interested").src = "/images/orange_bell.png";
+        }
+        if (document.getElementById("notification").innerHTML == "You are going to this gig") {
+            document.getElementById("going").src = "/images/orange_tick.png";
+        }
+    };
+
     if (document.getElementById("age")) {
         calculateAge(document.getElementById("age").innerHTML);
     };
@@ -37,17 +46,37 @@ function calculateAge(dob) {
 }
 
 function maybeOver() {
-    document.getElementById("interested").src = "/images/orange_bell.png";
+    if (document.getElementById("interested").src.includes("orange_bell.png")) {
+        document.getElementById("interested").src = "/images/blank_bell.png";
+    }
+    else {
+        document.getElementById("interested").src = "/images/orange_bell.png";
+    }
 }
 
 function maybeOut() {
-    document.getElementById("interested").src = "/images/blank_bell.png";
+    if (document.getElementById("interested").src.includes("orange_bell.png")) {
+        document.getElementById("interested").src = "/images/blank_bell.png";
+    }
+    else {
+        document.getElementById("interested").src = "/images/orange_bell.png";
+    }
 }
 
 function goingOver() {
-    document.getElementById("going").src = "/images/orange_tick.png";
+    if (document.getElementById("going").src.includes("orange_tick.png")) {
+        document.getElementById("going").src = "/images/blank_tick.png";
+    }
+    else {
+        document.getElementById("going").src = "/images/orange_tick.png";
+    }
 }
 
 function goingOut() {
-    document.getElementById("going").src = "/images/blank_tick.png";
+    if (document.getElementById("going").src.includes("orange_tick.png")) {
+        document.getElementById("going").src = "/images/blank_tick.png";
+    }
+    else {
+        document.getElementById("going").src = "/images/orange_tick.png";
+    }
 }

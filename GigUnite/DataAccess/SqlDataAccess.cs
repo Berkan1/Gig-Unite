@@ -37,10 +37,11 @@ namespace GigUnite.DataAccess
 				{
 					cnn.Open();
 					result = (int)command.ExecuteScalar();
+					cnn.Close();
 				}
 				catch (Exception ex)
 				{
-					throw;
+					throw ex;
 				}
 				return result;
 			}
@@ -59,10 +60,11 @@ namespace GigUnite.DataAccess
 				{
 					cnn.Open();
 					count = (int)command.ExecuteScalar();
+					cnn.Close();
 				}
 				catch (Exception ex)
 				{
-					throw;
+					throw ex;
 				}
 				return count;
 			}
@@ -91,10 +93,11 @@ namespace GigUnite.DataAccess
 				{
 					cnn.Open();
 					result = command.ExecuteNonQuery();
+					cnn.Close();
 				}
 				catch (Exception ex)
 				{
-					throw;
+					throw ex;
 				}
 				return result;
 			}
@@ -113,10 +116,11 @@ namespace GigUnite.DataAccess
 				{
 					cnn.Open();
 					result = command.ExecuteNonQuery();
+					cnn.Close();
 				}
 				catch (Exception ex)
 				{
-					throw;
+					throw ex;
 				}
 				return result;
 			}
@@ -134,11 +138,12 @@ namespace GigUnite.DataAccess
 				try
 				{
 					cnn.Open();
-					result = (int)command.ExecuteScalar(); ;
+					result = (int)command.ExecuteScalar();
+					cnn.Close();
 				}
 				catch (Exception ex)
 				{
-					throw;
+					throw ex;
 				}
 				return result;
 			}
@@ -156,11 +161,12 @@ namespace GigUnite.DataAccess
 				try
 				{
 					cnn.Open();
-					result = (int)command.ExecuteScalar(); ;
+					result = (int)command.ExecuteScalar();
+					cnn.Close();
 				}
 				catch (Exception ex)
 				{
-					throw;
+					throw ex;
 				}
 
 				DeleteProfile(sql2, result);
@@ -186,10 +192,11 @@ namespace GigUnite.DataAccess
 				{
 					cnn.Open();
 					result = command.ExecuteNonQuery();
+					cnn.Close();
 				}
 				catch (Exception ex)
 				{
-					throw;
+					throw ex;
 				}
 				return result;
 			}
@@ -208,10 +215,11 @@ namespace GigUnite.DataAccess
 				{
 					cnn.Open();
 					result = command.ExecuteNonQuery();
+					cnn.Close();
 				}
 				catch (Exception ex)
 				{
-					throw;
+					throw ex;
 				}
 				return result;
 			}
@@ -236,10 +244,11 @@ namespace GigUnite.DataAccess
 				{
 					cnn.Open();
 					result = command.ExecuteNonQuery();
+					cnn.Close();
 				}
 				catch (Exception ex)
 				{
-					throw;
+					throw ex;
 				}
 				return result;
 			}
@@ -264,10 +273,11 @@ namespace GigUnite.DataAccess
 						string email = (string)reader["Email"];
 						recipients.Add(email);
 					}
+					cnn.Close();
 				}
 				catch (Exception ex)
 				{
-					throw;
+					throw ex;
 				}
 
 				return recipients;
@@ -291,10 +301,36 @@ namespace GigUnite.DataAccess
 				{
 					cnn.Open();
 					result = command.ExecuteNonQuery();
+					cnn.Close();
 				}
 				catch (Exception ex)
 				{
-					throw;
+					throw ex;
+				}
+				return result;
+			}
+		}
+
+		public static int DeleteInterest(string sql, int gigId, int profileId)
+		{
+			using (SqlConnection cnn = new SqlConnection(connect))
+			{
+				SqlCommand command = new SqlCommand(sql, cnn);
+				command.Parameters.Add("@EventId", SqlDbType.NVarChar);
+				command.Parameters["@EventId"].Value = gigId;
+				command.Parameters.Add("@UserId", SqlDbType.NVarChar);
+				command.Parameters["@UserId"].Value = profileId;
+				int result;
+
+				try
+				{
+					cnn.Open();
+					result = command.ExecuteNonQuery();
+					cnn.Close();
+				}
+				catch (Exception ex)
+				{
+					throw ex;
 				}
 				return result;
 			}

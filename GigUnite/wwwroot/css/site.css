@@ -137,7 +137,12 @@ div.band {
 }
 
 div.bandinput {
-	overflow: hidden
+	overflow: hidden;
+}
+
+div.notifications {
+	display: flex;
+	justify-content: flex-end;
 }
 
 #map {

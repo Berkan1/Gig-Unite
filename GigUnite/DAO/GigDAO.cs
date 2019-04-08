@@ -56,9 +56,18 @@ namespace GigUnite.DAO
 		
 		public static int SetInterest(int gigId, int profileId, string level)
 		{
+			DeleteInterest(gigId, profileId);
+
 			string sql = @"INSERT INTO dbo.Interest (Status, EventId, UserId) VALUES (@Status, @EventId, @UserId);";
 
 			return SqlDataAccess.SetInterest(sql, gigId, profileId, level);
+		}
+
+		public static int DeleteInterest(int gigId, int profileId)
+		{
+			string sql = @"DELETE FROM dbo.Interest WHERE EventId = @EventId AND UserId = @UserId;";
+
+			return SqlDataAccess.DeleteInterest(sql, gigId, profileId);
 		}
 	}
 }

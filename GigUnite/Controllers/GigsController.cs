@@ -302,5 +302,19 @@ namespace GigUnite.Controllers
 
 			return RedirectToAction("Details", new { id = gigId });
 		}
+
+		public async Task<IActionResult> RemoveInterest(int gigId)
+		{
+			string userId = _userManager.GetUserId(HttpContext.User);
+
+			var profile = await _context.Profile
+				.FirstOrDefaultAsync(m => m.UserId == userId);
+
+			var profileId = profile.Id;
+
+			DeleteInterest(gigId, profileId);
+
+			return RedirectToAction("Details", new { id = gigId });
+		}
 	}
 }
