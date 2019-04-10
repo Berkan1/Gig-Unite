@@ -9,6 +9,7 @@ using System.Data;
 using System.Data.SqlClient;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using GigUnite.Models;
 
 namespace GigUnite.DataAccess
 {
@@ -16,11 +17,40 @@ namespace GigUnite.DataAccess
 	{
 		static string connect = "Server=(localdb)\\mssqllocaldb;Database=aspnet-GigUnite-B45964CB-01FC-4D77-A0CD-8AE3770FE19E;Trusted_Connection=True;MultipleActiveResultSets=true";
 
-		public static List<T> LoadData<T>(string sql)
+		public static List<Gig> LoadData(string sql, string genre)
 		{
-			using (IDbConnection cnn = new SqlConnection(connect))
+			using (SqlConnection cnn = new SqlConnection(connect))
 			{
-				return cnn.Query<T>(sql).ToList();
+				SqlCommand command = new SqlCommand(sql, cnn);
+				command.Parameters.Add("@Genre", SqlDbType.NVarChar);
+				command.Parameters["@Genre"].Value = genre;
+				List<Gig> gigs = new List<Gig>();
+
+				try
+				{
+					cnn.Open();
+					SqlDataReader reader = command.ExecuteReader();
+
+					while (reader.Read())
+					{
+						gigs.Add(new Gig
+						{
+							Id = (int)reader["Id"],
+							Band = (string)reader["Band"],
+							Date = (DateTime)reader["Date"],
+							Venue = (string)reader["Venue"],
+							Price = (decimal)reader["Price"],
+							ProfileId = (int)reader["ProfileId"]
+						});
+					}
+					cnn.Close();
+				}
+				catch (Exception ex)
+				{
+					throw ex;
+				}
+
+				return gigs;
 			}
 		}
 
@@ -333,6 +363,36 @@ namespace GigUnite.DataAccess
 					throw ex;
 				}
 				return result;
+			}
+		}
+
+		public static List<int> RecommendedGigs(string sql, string genre)
+		{
+			using (SqlConnection cnn = new SqlConnection(connect))
+			{
+				SqlCommand command = new SqlCommand(sql, cnn);
+				command.Parameters.Add("@Genre", SqlDbType.NVarChar);
+				command.Parameters["@Genre"].Value = genre;
+				List<int> gigIds = new List<int>();
+
+				try
+				{
+					cnn.Open();
+					SqlDataReader reader = command.ExecuteReader();
+
+					while (reader.Read())
+					{
+						int gigId = (int)reader["Id"];
+						gigIds.Add(gigId);
+					}
+					cnn.Close();
+				}
+				catch (Exception ex)
+				{
+					throw ex;
+				}
+
+				return gigIds;
 			}
 		}
 	}

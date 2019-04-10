@@ -81,6 +81,13 @@ function goingOut() {
     }
 }
 
-function showIt() {
-    document.getElementById("hidden").style.visibility = 'visible';
+function showIt(x) {
+    if (x.innerHTML == 'Show') {
+        document.getElementById("hidden").style.visibility = 'visible';
+        x.innerHTML = 'Hide';
+    }
+    else {
+        document.getElementById("hidden").style.visibility = 'hidden';
+        x.innerHTML = 'Show';
+    }
 }

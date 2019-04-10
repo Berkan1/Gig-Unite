@@ -195,7 +195,7 @@ namespace GigUnite.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,Band,Date,Venue,Price,Location,ProfileId")] Gig gig, List<string> genres)
+        public async Task<IActionResult> Create([Bind("Id,Band,Date,Venue,Price,ProfileId")] Gig gig, List<string> genres)
         {
             if (ModelState.IsValid)
             {
@@ -262,7 +262,7 @@ namespace GigUnite.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Id,Band,Date,Venue,Price,Location,ProfileId")] Gig gig)
+        public async Task<IActionResult> Edit(int id, [Bind("Id,Band,Date,Venue,Price,ProfileId")] Gig gig)
         {
             if (id != gig.Id)
             {
