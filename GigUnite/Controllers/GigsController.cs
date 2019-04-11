@@ -195,7 +195,7 @@ namespace GigUnite.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,Band,Date,Venue,Price,ProfileId")] Gig gig, List<string> genres)
+        public async Task<IActionResult> Create([Bind("Id,Band,Date,Venue,Price,TicketLink,Views,ProfileId")] Gig gig, List<string> genres)
         {
             if (ModelState.IsValid)
             {
@@ -253,7 +253,7 @@ namespace GigUnite.Controllers
             {
                 return NotFound();
             }
-            ViewData["ProfileId"] = new SelectList(_context.Profile, "Id", "City", gig.ProfileId);
+            ViewData["ProfileId"] = new SelectList(_context.Profile, "Id", "Displayname", gig.ProfileId);
             return View(gig);
         }
 
@@ -262,7 +262,7 @@ namespace GigUnite.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Id,Band,Date,Venue,Price,ProfileId")] Gig gig)
+        public async Task<IActionResult> Edit(int id, [Bind("Id,Band,Date,Venue,Price,TicketLink,Views,ProfileId")] Gig gig)
         {
             if (id != gig.Id)
             {
@@ -289,7 +289,7 @@ namespace GigUnite.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["ProfileId"] = new SelectList(_context.Profile, "Id", "City", gig.ProfileId);
+            ViewData["ProfileId"] = new SelectList(_context.Profile, "Id", "Displayname", gig.ProfileId);
             return View(gig);
         }
 

@@ -4,14 +4,16 @@ using GigUnite.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace GigUnite.Data.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20190411171010_Ticketlink")]
+    partial class Ticketlink
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -77,8 +79,6 @@ namespace GigUnite.Data.Migrations
                     b.Property<string>("Venue")
                         .IsRequired()
                         .HasMaxLength(50);
-
-                    b.Property<int>("Views");
 
                     b.HasKey("Id");
 
@@ -174,27 +174,6 @@ namespace GigUnite.Data.Migrations
                     b.HasIndex("ProfileId");
 
                     b.ToTable("ProfileGenre");
-                });
-
-            modelBuilder.Entity("GigUnite.Models.Report", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<int>("ProfileId");
-
-                    b.Property<string>("Reason")
-                        .IsRequired();
-
-                    b.Property<string>("ReportBy")
-                        .IsRequired();
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("ProfileId");
-
-                    b.ToTable("Report");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRole", b =>
@@ -400,14 +379,6 @@ namespace GigUnite.Data.Migrations
 
                     b.HasOne("GigUnite.Models.Profile", "Profile")
                         .WithMany("ProfileGenres")
-                        .HasForeignKey("ProfileId")
-                        .OnDelete(DeleteBehavior.Cascade);
-                });
-
-            modelBuilder.Entity("GigUnite.Models.Report", b =>
-                {
-                    b.HasOne("GigUnite.Models.Profile", "Profile")
-                        .WithMany("Reports")
                         .HasForeignKey("ProfileId")
                         .OnDelete(DeleteBehavior.Cascade);
                 });

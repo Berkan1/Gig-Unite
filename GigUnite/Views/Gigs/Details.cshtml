@@ -19,6 +19,10 @@
 			<p class="medium" id="location">@Html.DisplayFor(model => model.Venue)</p>
 			<b class="medium">@Html.DisplayNameFor(model => model.Price)</b><br />
 			<p class="medium">£@Html.DisplayFor(model => model.Price)</p>
+			<b class="medium">@Html.DisplayNameFor(model => model.TicketLink)</b><br />
+			<p class="medium">@Html.DisplayFor(model => model.TicketLink)</p>
+			<b class="medium">@Html.DisplayNameFor(model => model.Views)</b><br />
+			<p class="medium">@Html.DisplayFor(model => model.Views)</p>
 			<b class="medium">Genres</b><br />
 			@foreach (string genre in ViewBag.GigGenres)
 			{

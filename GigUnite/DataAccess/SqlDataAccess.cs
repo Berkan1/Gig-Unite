@@ -40,6 +40,8 @@ namespace GigUnite.DataAccess
 							Date = (DateTime)reader["Date"],
 							Venue = (string)reader["Venue"],
 							Price = (decimal)reader["Price"],
+							TicketLink = (string)reader["TicketLink"],
+							Views = (int)reader["Views"],
 							ProfileId = (int)reader["ProfileId"]
 						});
 					}
@@ -366,11 +368,13 @@ namespace GigUnite.DataAccess
 			}
 		}
 
-		public static List<int> RecommendedGigs(string sql, string genre)
+		public static List<int> RecommendedGigs(string sql, int profileId, string genre)
 		{
 			using (SqlConnection cnn = new SqlConnection(connect))
 			{
 				SqlCommand command = new SqlCommand(sql, cnn);
+				command.Parameters.Add("@ProfileId", SqlDbType.NVarChar);
+				command.Parameters["@ProfileId"].Value = profileId;
 				command.Parameters.Add("@Genre", SqlDbType.NVarChar);
 				command.Parameters["@Genre"].Value = genre;
 				List<int> gigIds = new List<int>();

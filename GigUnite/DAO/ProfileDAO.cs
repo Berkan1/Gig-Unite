@@ -10,24 +10,23 @@ namespace GigUnite.DAO
 {
 	public static class ProfileDAO
 	{
-		public static int CreateProfile(string displayname, string city, DateTime dob, string userId)
+		public static int CreateProfile(string displayname, DateTime dob, string userId)
 		{
 			Profile data = new Profile
 			{
 				Displayname = displayname,
-				City = city,
 				Dob = dob,
 				UserId = userId
 			};
 
-			string sql = @"INSERT INTO dbo.Profile (Displayname, City, Dob, UserId) VALUES (@Displayname, @City, @Dob, @UserId);";
+			string sql = @"INSERT INTO dbo.Profile (Displayname, Dob, UserId) VALUES (@Displayname, @Dob, @UserId);";
 
 			return SqlDataAccess.SaveData(sql, data);
 		}
 
 		public static int LoadYourProfile(string userId)
 		{
-			string sql = @"IF EXISTS(SELECT Id, Displayname, City, Dob, Bio, ImageURL, UserId FROM dbo.Profile WHERE UserId = @UserId) SELECT 1 ELSE SELECT 0;";
+			string sql = @"IF EXISTS(SELECT Id, Displayname, Dob, Bio, ImageURL, UserId FROM dbo.Profile WHERE UserId = @UserId) SELECT 1 ELSE SELECT 0;";
 
 			return SqlDataAccess.LoadUserData(sql, userId);
 		}

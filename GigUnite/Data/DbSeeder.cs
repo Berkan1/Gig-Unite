@@ -42,7 +42,7 @@ namespace GigUnite.Data
 				new Genre() { Name = "Latin" }
 				);
 				context.SaveChanges();
-			}	
+			}
 		}
 	}
 }

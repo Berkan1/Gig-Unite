@@ -25,7 +25,20 @@ namespace GigUnite.Controllers
 			_userManager = userManager;
 		}
 
-		public async Task<IActionResult> Index()
+		public IActionResult Index()
+		{
+			if (User.Identity.IsAuthenticated)
+			{
+				return RedirectToAction("Dashboard");
+			}
+			else
+			{
+				return View();
+			}
+		}
+
+		[Authorize]
+		public async Task<IActionResult> Dashboard()
 		{
 			string userId = _userManager.GetUserId(HttpContext.User);
 
@@ -45,7 +58,7 @@ namespace GigUnite.Controllers
 				genres.Add(genre);
 			}
 
-			var data = LoadGigs(genres);
+			var data = LoadGigs(profileId, genres);
 
 			List<int> ranking = (from m in data
 								 group m by m into rank
