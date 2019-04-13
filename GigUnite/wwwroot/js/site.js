@@ -91,3 +91,89 @@ function showIt(x) {
         x.innerHTML = 'Show';
     }
 }
+
+var map;
+var service;
+var infowindow;
+
+function showMap() {
+    var london = new google.maps.LatLng(51.5074, 0.1278);
+
+    infowindow = new google.maps.InfoWindow();
+
+    map = new google.maps.Map(
+        document.getElementById('map'), { center: london, zoom: 15 });
+
+    var geocoder = new google.maps.Geocoder();
+
+    geocodeAddress(geocoder, map);
+}
+
+function geocodeAddress(geocoder, resultsMap) {
+    var address = document.getElementById("location").innerHTML;
+    geocoder.geocode({ 'address': address }, function (results, status) {
+        if (status === 'OK') {
+            resultsMap.setCenter(results[0].geometry.location);
+            resultsMap.setZoom(16);
+            var marker = new google.maps.Marker({
+                map: resultsMap,
+                position: results[0].geometry.location
+            });
+
+            var request = {
+                location: results[0].geometry.location,
+                radius: '400',
+                type: ['cafe']
+            };
+            
+            service = new google.maps.places.PlacesService(map);
+            service.nearbySearch(request, callback);
+        }
+    });
+}
+
+function callback(results, status) {
+    if (status == google.maps.places.PlacesServiceStatus.OK) {
+        for (var i = 0; i < results.length; i++) {
+            var place = results[i];
+            createMarker(results[i]);
+        }
+    }
+}
+
+function createMarker(place) {
+    var marker = new google.maps.Marker({
+        map: map,
+        position: place.geometry.location,
+        icon: 'http://maps.google.com/mapfiles/ms/icons/green-dot.png'
+    });
+
+    google.maps.event.addListener(marker, 'click', function () {
+        infowindow.setContent(place.name);
+        infowindow.open(map, this);
+    })
+}
+
+function showMap2() {
+    var map2 = new google.maps.Map(document.getElementById('map'), {
+        zoom: 8,
+        center: { lat: 51.5074, lng: 0.1278 }
+    });
+    var geocoder = new google.maps.Geocoder();
+
+    geocodeAddress2(geocoder, map2);
+}
+
+function geocodeAddress2(geocoder, resultsMap) {
+    var address = document.getElementById('Venue').value;
+    geocoder.geocode({ 'address': address }, function (results, status) {
+        if (status === 'OK') {
+            resultsMap.setCenter(results[0].geometry.location);
+            resultsMap.setZoom(12);
+            var marker = new google.maps.Marker({
+                map: resultsMap,
+                position: results[0].geometry.location
+            });
+        }
+    });
+}

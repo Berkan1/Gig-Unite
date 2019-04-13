@@ -25,7 +25,7 @@
 			</div>
 			<div class="form-group">
 				<label asp-for="Venue" class="control-label"></label>
-				<input asp-for="Venue" class="form-control" onchange="showMap()" />
+				<input asp-for="Venue" class="form-control" onchange="showMap2()" />
 				<span asp-validation-for="Venue" class="text-danger"></span>
 			</div>
 			<div class="form-group">
@@ -65,32 +65,8 @@
 </div>
 
 <div id="map"></div>
-<script>
-	function showMap() {
-		var map = new google.maps.Map(document.getElementById('map'), {
-			zoom: 8,
-			center: { lat: 51.5074, lng: 0.1278 }
-		});
-		var geocoder = new google.maps.Geocoder();
 
-		geocodeAddress(geocoder, map);
-	}
-
-	function geocodeAddress(geocoder, resultsMap) {
-		var address = document.getElementById('Venue').value;
-		geocoder.geocode({ 'address': address }, function (results, status) {
-			if (status === 'OK') {
-				resultsMap.setCenter(results[0].geometry.location);
-				resultsMap.setZoom(12);
-				var marker = new google.maps.Marker({
-					map: resultsMap,
-					position: results[0].geometry.location
-				});
-			}
-		});
-	}
-</script>
-<script src="https://maps.googleapis.com/maps/api/js?key=YOUR_API_KEY&callback=showMap" async defer></script>
+<script src="https://maps.googleapis.com/maps/api/js?key=YOUR_API_KEY&callback=showMap2" async defer></script>
 
 @section Scripts {
 	@{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
