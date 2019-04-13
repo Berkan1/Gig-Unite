@@ -5,7 +5,7 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.Extensions.Logging;
-using static GigUnite.DAO.ProfileDAO;
+using static GigUnite.DAO.ReportDAO;
 
 namespace GigUnite.Areas.Identity.Pages.Account.Manage
 {
@@ -67,9 +67,10 @@ namespace GigUnite.Areas.Identity.Pages.Account.Manage
                 }
             }
 
-			deleteProfile(_userManager.GetUserId(User));
+			int profileId = GetProfileId(_userManager.GetUserId(User));
+			DeleteUser(profileId);
 
-            var result = await _userManager.DeleteAsync(user);
+			var result = await _userManager.DeleteAsync(user);
             var userId = await _userManager.GetUserIdAsync(user);
             if (!result.Succeeded)
             {

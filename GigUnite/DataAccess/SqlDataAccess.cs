@@ -445,5 +445,35 @@ namespace GigUnite.DataAccess
 				return result;
 			}
 		}
+
+		public static Boolean IsBanned(string sql, string email)
+		{
+			using (SqlConnection cnn = new SqlConnection(connect))
+			{
+				SqlCommand command = new SqlCommand(sql, cnn);
+				command.Parameters.Add("@Email", SqlDbType.NVarChar);
+				command.Parameters["@Email"].Value = email;
+				int result = 0;
+
+				try
+				{
+					cnn.Open();
+					result = (int)command.ExecuteScalar();
+					cnn.Close();
+				}
+				catch (Exception ex)
+				{
+					throw ex;
+				}
+				if (result == 0)
+				{
+					return true;
+				}
+				else
+				{
+					return false;
+				}
+			}
+		}
 	}
 }

@@ -86,12 +86,9 @@ namespace GigUnite.Controllers
 			return RedirectToAction("Dashboard", "Home");
 		}
 
-		public async Task<IActionResult> Deactivate(int profileId)
+		public IActionResult Deactivate(int profileId)
 		{
-			var profile = await _context.Profile
-				.FirstOrDefaultAsync(m => m.Id == profileId);
-
-			DeleteUser(profile.UserId, profileId);
+			DeleteUser(profileId);
 
 			return RedirectToAction(nameof(Index));
 		}
