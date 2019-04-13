@@ -10,6 +10,9 @@ using GigUnite.Models;
 using Microsoft.AspNetCore.Identity;
 using static GigUnite.DAO.ProfileDAO;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http;
+using System.IO;
+using Microsoft.AspNetCore.Hosting;
 
 namespace GigUnite.Controllers
 {
@@ -18,11 +21,13 @@ namespace GigUnite.Controllers
     {
         private readonly ApplicationDbContext _context;
 		private readonly UserManager<IdentityUser> _userManager;
+		private readonly IHostingEnvironment he;
 
-		public ProfilesController(ApplicationDbContext context, UserManager<IdentityUser> userManager)
+		public ProfilesController(ApplicationDbContext context, UserManager<IdentityUser> userManager, IHostingEnvironment e)
         {
             _context = context;
 			_userManager = userManager;
+			he = e;
 		}
 
         // GET: Profiles
@@ -73,6 +78,28 @@ namespace GigUnite.Controllers
 			ViewBag.MyGenres = mygenres;
 
 			return View(profile);
+		}
+
+		[HttpPost]
+		[ValidateAntiForgeryToken]
+		public async Task<IActionResult> MyProfile(IFormFile file)
+		{
+			string userId = _userManager.GetUserId(HttpContext.User);
+			string email = _userManager.GetUserName(HttpContext.User) + ".png";
+
+			var profile = await _context.Profile
+				.FirstOrDefaultAsync(m => m.UserId == userId);
+
+			var filename = Path.Combine(he.WebRootPath, "images", "profiles", email);
+			using (var fileStream = new FileStream(filename, FileMode.Create))
+			{
+				file.CopyTo(fileStream);
+			}
+			
+			profile.ImageURL = email;
+			_context.SaveChanges();
+
+			return RedirectToAction("MyProfile");
 		}
 
 		// GET: Profiles/EditProfile/
