@@ -21,6 +21,7 @@ namespace GigUnite.Data
 		public DbSet<Comment> Comment { get; set; }
 		public DbSet<ProfileGenre> ProfileGenre { get; set; }
 		public DbSet<GigGenre> GigGenre { get; set; }
+		public DbSet<GigUnite.Models.Report> Report { get; set; }
 
 	}
 }

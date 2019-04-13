@@ -150,6 +150,10 @@ namespace GigUnite.Controllers
 			ViewBag.Going = peopleGoing;
 			ViewBag.Interested = peopleInterested;
 
+			gig.Views += 1;
+
+			_context.SaveChanges();
+
 			return View(gig);
         }
 

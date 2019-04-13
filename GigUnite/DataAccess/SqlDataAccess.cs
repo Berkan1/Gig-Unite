@@ -399,5 +399,51 @@ namespace GigUnite.DataAccess
 				return gigIds;
 			}
 		}
+
+		public static int DeleteReport(string sql, int reportId)
+		{
+			using (SqlConnection cnn = new SqlConnection(connect))
+			{
+				SqlCommand command = new SqlCommand(sql, cnn);
+				command.Parameters.Add("@ReportId", SqlDbType.NVarChar);
+				command.Parameters["@ReportId"].Value = reportId;
+				int result;
+
+				try
+				{
+					cnn.Open();
+					result = command.ExecuteNonQuery();
+					cnn.Close();
+				}
+				catch (Exception ex)
+				{
+					throw ex;
+				}
+				return result;
+			}
+		}
+
+		public static int DeleteUser<T>(string sql, T profileId)
+		{
+			using (SqlConnection cnn = new SqlConnection(connect))
+			{
+				SqlCommand command = new SqlCommand(sql, cnn);
+				command.Parameters.Add("@ProfileId", SqlDbType.NVarChar);
+				command.Parameters["@ProfileId"].Value = profileId;
+				int result;
+
+				try
+				{
+					cnn.Open();
+					result = command.ExecuteNonQuery();
+					cnn.Close();
+				}
+				catch (Exception ex)
+				{
+					throw ex;
+				}
+				return result;
+			}
+		}
 	}
 }

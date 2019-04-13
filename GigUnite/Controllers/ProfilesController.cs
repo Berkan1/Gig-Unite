@@ -13,6 +13,7 @@ using Microsoft.AspNetCore.Authorization;
 
 namespace GigUnite.Controllers
 {
+	[Authorize]
 	public class ProfilesController : Controller
     {
         private readonly ApplicationDbContext _context;

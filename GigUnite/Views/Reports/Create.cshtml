@@ -1,0 +1,37 @@
+﻿@model GigUnite.Models.Report
+
+@{
+    ViewData["Title"] = "Create";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h1>Create</h1>
+
+<h4>Report</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+		<form asp-action="Create">
+			<div asp-validation-summary="ModelOnly" class="text-danger"></div>
+			<div class="form-group">
+				<input asp-for="ReportBy" value="@ViewBag.ReportBy" type="hidden" class="form-control" readonly />
+			</div>
+			<p class="medium">Reporting @ViewBag.ProfileName</p>
+			<div class="form-group">
+				<label asp-for="Reason" class="control-label"></label>
+				<textarea asp-for="Reason" class="form-control" rows="5"></textarea>
+				<span asp-validation-for="Reason" class="text-danger"></span>
+			</div>
+			<div class="form-group">
+				<input asp-for="ProfileId" value=@ViewBag.ProfileId type="hidden" class="form-control" readonly />
+			</div>
+			<div class="form-group">
+				<input type="submit" value="Submit" class="btn btn-primary" />
+			</div>
+		</form>
+    </div>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}
