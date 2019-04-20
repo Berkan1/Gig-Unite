@@ -30,9 +30,11 @@ namespace GigUnite.Controllers
         // GET: Gigs
         public async Task<IActionResult> Index()
         {
-            var applicationDbContext = _context.Gig.Include(g => g.Profile);
-            return View(await applicationDbContext.ToListAsync());
-        }
+			var gigs = from m in _context.Gig.Include(g => g.Profile)
+					   select m;
+
+			return View(await gigs.ToListAsync());
+		}
 
         // GET: Gigs/Details/5
         public async Task<IActionResult> Details(int? id)

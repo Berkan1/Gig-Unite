@@ -21,6 +21,19 @@ $(document).ready(function () {
         columns: 2,
         placeholder: 'Select genres'
     });
+
+    if (document.getElementById("search")) {
+        $("#search").keyup(function () {
+            $(".filtered").each(function () {
+                if (($(this).text().toUpperCase().includes($("#search").val().toUpperCase()))) {
+                    $(this).show();
+                }
+                else {
+                    $(this).hide();
+                }
+            });
+        });
+    }
 });
 
 function calculateAge(dob) {
