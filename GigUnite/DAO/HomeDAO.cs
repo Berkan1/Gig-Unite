@@ -10,9 +10,10 @@ namespace GigUnite.DAO
 {
 	public static class HomeDAO
 	{
-		public static List<int> LoadGigs(int profileId, List<string> genres)
+		public static List<int> LoadRecommendedGigs(int profileId, List<string> genres)
 		{
 			List<int> gigIds = new List<int>();
+			List<string> bands = new List<string>();
 
 			foreach (string genre in genres)
 			{
@@ -23,7 +24,23 @@ namespace GigUnite.DAO
 				gigIds.AddRange(SqlDataAccess.RecommendedGigs(sql, profileId, genre));
 			}
 
-			return gigIds;
+			string sql2 = @"SELECT Band1, Band2, Band3, Band4, Band5 from dbo.Profile
+							WHERE dbo.Profile.Id = @ProfileId;";
+			bands.AddRange(SqlDataAccess.ProfileBands(sql2, profileId));
+
+			foreach (string band in bands)
+			{
+				string sql3 = @"SELECT dbo.Gig.Id from dbo.Gig WHERE dbo.Gig.Band = @Band
+								AND dbo.Gig.ProfileId <> @ProfileId;";
+				gigIds.AddRange(SqlDataAccess.RecommendedBands(sql3, profileId, band));
+			}
+			
+			string sql4 = @"SELECT dbo.Gig.Id from dbo.Gig
+							INNER JOIN dbo.Interest ON dbo.Gig.Id=dbo.Interest.EventId
+							WHERE dbo.Interest.UserId = @ProfileId;";
+			List<int> interestedGigs = (SqlDataAccess.InterestedGigs(sql4, profileId));
+
+			return gigIds.Except(interestedGigs).ToList();
 		}
 	}
 }

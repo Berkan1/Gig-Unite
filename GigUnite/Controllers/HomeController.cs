@@ -58,7 +58,7 @@ namespace GigUnite.Controllers
 				genres.Add(genre);
 			}
 
-			var data = LoadGigs(profileId, genres);
+			var data = LoadRecommendedGigs(profileId, genres);
 
 			List<int> ranking = (from m in data
 								 group m by m into rank

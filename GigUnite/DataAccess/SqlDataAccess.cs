@@ -400,6 +400,104 @@ namespace GigUnite.DataAccess
 			}
 		}
 
+		public static List<int> RecommendedBands(string sql, int profileId, string band)
+		{
+			using (SqlConnection cnn = new SqlConnection(connect))
+			{
+				SqlCommand command = new SqlCommand(sql, cnn);
+				command.Parameters.Add("@ProfileId", SqlDbType.NVarChar);
+				command.Parameters["@ProfileId"].Value = profileId;
+				command.Parameters.Add("@Band", SqlDbType.NVarChar);
+				command.Parameters["@Band"].Value = band;
+				List<int> gigIds = new List<int>();
+
+				try
+				{
+					cnn.Open();
+					SqlDataReader reader = command.ExecuteReader();
+
+					while (reader.Read())
+					{
+						int gigId = (int)reader["Id"];
+						gigIds.Add(gigId);
+						gigIds.Add(gigId);
+					}
+					cnn.Close();
+				}
+				catch (Exception ex)
+				{
+					throw ex;
+				}
+
+				return gigIds;
+			}
+		}
+
+		public static List<int> InterestedGigs(string sql, int profileId)
+		{
+			using (SqlConnection cnn = new SqlConnection(connect))
+			{
+				SqlCommand command = new SqlCommand(sql, cnn);
+				command.Parameters.Add("@ProfileId", SqlDbType.NVarChar);
+				command.Parameters["@ProfileId"].Value = profileId;
+				List<int> gigIds = new List<int>();
+
+				try
+				{
+					cnn.Open();
+					SqlDataReader reader = command.ExecuteReader();
+
+					while (reader.Read())
+					{
+						int gigId = (int)reader["Id"];
+						gigIds.Add(gigId);
+					}
+					cnn.Close();
+				}
+				catch (Exception ex)
+				{
+					throw ex;
+				}
+
+				return gigIds;
+			}
+		}
+
+		public static List<string> ProfileBands(string sql, int profileId)
+		{
+			using (SqlConnection cnn = new SqlConnection(connect))
+			{
+				SqlCommand command = new SqlCommand(sql, cnn);
+				command.Parameters.Add("@ProfileId", SqlDbType.NVarChar);
+				command.Parameters["@ProfileId"].Value = profileId;
+				List<string> bands = new List<string>();
+
+				try
+				{
+					cnn.Open();
+					SqlDataReader reader = command.ExecuteReader();
+
+					while (reader.Read())
+					{
+						for (int i = 1; i < 6; i++)
+						{
+							if (reader["Band" + i] != DBNull.Value)
+							{
+								bands.Add((string)reader["Band" + i]);
+							}
+						}
+					}
+					cnn.Close();
+				}
+				catch (Exception ex)
+				{
+					throw ex;
+				}
+
+				return bands;
+			}
+		}
+
 		public static int DeleteReport(string sql, int reportId)
 		{
 			using (SqlConnection cnn = new SqlConnection(connect))
