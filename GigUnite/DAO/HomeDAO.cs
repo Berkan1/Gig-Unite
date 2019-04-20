@@ -38,9 +38,18 @@ namespace GigUnite.DAO
 			string sql4 = @"SELECT dbo.Gig.Id from dbo.Gig
 							INNER JOIN dbo.Interest ON dbo.Gig.Id=dbo.Interest.EventId
 							WHERE dbo.Interest.UserId = @ProfileId;";
-			List<int> interestedGigs = (SqlDataAccess.InterestedGigs(sql4, profileId));
+			List<int> interestedGigs = SqlDataAccess.InterestedGigs(sql4, profileId);
 
 			return gigIds.Except(interestedGigs).ToList();
+		}
+
+		public static List<int> LoadInterestedGigs(int profileId)
+		{
+			string sql4 = @"SELECT dbo.Gig.Id from dbo.Gig
+							INNER JOIN dbo.Interest ON dbo.Gig.Id=dbo.Interest.EventId
+							WHERE dbo.Interest.UserId = @ProfileId;";
+
+			return SqlDataAccess.InterestedGigs(sql4, profileId);
 		}
 	}
 }

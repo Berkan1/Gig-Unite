@@ -59,23 +59,39 @@ namespace GigUnite.Controllers
 			}
 
 			var data = LoadRecommendedGigs(profileId, genres);
+			var data2 = LoadInterestedGigs(profileId);
 
 			List<int> ranking = (from m in data
 								 group m by m into rank
 								 orderby rank.Count() descending
 								 select rank.Key).ToList();
 
-			List<Gig> gigs = new List<Gig>();
+			List<Gig> recommendedGigs = new List<Gig>();
+			List<Gig> interestedGigs = new List<Gig>();
 
 			foreach (var row in ranking)
 			{
 				var gig = await _context.Gig
 				.FirstOrDefaultAsync(m => m.Id == row);
 
-				gigs.Add(gig);
+				recommendedGigs.Add(gig);
 			}
 
-			return View(gigs);
+			foreach (var gigId in data2)
+			{
+				var gig = await _context.Gig
+				.FirstOrDefaultAsync(m => m.Id == gigId);
+
+				interestedGigs.Add(gig);
+			}
+
+			DashboardModel dashboardModel = new DashboardModel
+			{
+				RecommendedGigs = recommendedGigs,
+				InterestedGigs = interestedGigs
+			};
+
+			return View(dashboardModel);
 		}
 
 		[ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
