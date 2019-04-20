@@ -94,6 +94,14 @@ function goingOut() {
     }
 }
 
+function gigOver(x) {
+    x.style.backgroundColor = "#007BFF";
+} 
+
+function gigOut(x) {
+    x.style.backgroundColor = "#48D7F5";
+}
+
 function showIt(x) {
     if (x.innerHTML == 'Show') {
         document.getElementById("hidden").style.visibility = 'visible';

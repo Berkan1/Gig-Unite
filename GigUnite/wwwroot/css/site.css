@@ -138,6 +138,24 @@ div.notifications {
 	justify-content: flex-end;
 }
 
+div#dashboard {
+	background-color: #48D7F5;
+	padding: 10px;
+	border: 1px solid green;
+	display: inline-block;
+	margin-left: 20%;
+	margin-bottom: 30px;
+}
+
+div.icons {
+	display: inline-block;
+	vertical-align: top;
+}
+
+div.gigs {
+	display: inline-block;
+}
+
 div#hidden {
 	visibility: hidden;
 }
@@ -150,4 +168,9 @@ div#hidden {
 #bluebutton {
 	background-color: dodgerblue;
 	color: white;
+}
+
+a.gigs {
+	color: #000000;
+	text-decoration: none !important;
 }

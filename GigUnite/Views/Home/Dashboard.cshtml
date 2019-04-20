@@ -5,106 +5,71 @@
 	Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h1>Index</h1>
-
-<p>
-	<a asp-action="Create">Create New</a>
-</p>
-<table class="table">
-	<thead>
-		<tr>
-			<th>
-				@Html.DisplayNameFor(model => model.RecommendedGigs[0].Band)
-			</th>
-			<th>
-				@Html.DisplayNameFor(model => model.RecommendedGigs[0].Date)
-			</th>
-			<th>
-				@Html.DisplayNameFor(model => model.RecommendedGigs[0].Venue)
-			</th>
-			<th>
-				@Html.DisplayNameFor(model => model.RecommendedGigs[0].Price)
-			</th>
-			<th>
-				@Html.DisplayNameFor(model => model.RecommendedGigs[0].Profile)
-			</th>
-			<th></th>
-		</tr>
-	</thead>
-	<tbody>
-		@foreach (var item in Model.RecommendedGigs)
-		{
-			<tr>
-				<td>
-					@Html.DisplayFor(modelItem => item.Band)
-				</td>
-				<td>
-					@Html.DisplayFor(modelItem => item.Date)
-				</td>
-				<td>
-					@Html.DisplayFor(modelItem => item.Venue)
-				</td>
-				<td>
-					@Html.DisplayFor(modelItem => item.Price)
-				</td>
-				<td>
-					@Html.DisplayFor(modelItem => item.Profile.Displayname)
-				</td>
-				<td>
-					<a asp-controller="Gigs" asp-action="Details" asp-route-id="@item.Id">Details</a>
-				</td>
-			</tr>
-		}
-	</tbody>
-</table>
-
+<h1>My Dashboard</h1>
 <br />
-<br />
-
-<table class="table">
-	<thead>
-		<tr>
-			<th>
-				@Html.DisplayNameFor(model => model.InterestedGigs[0].Band)
-			</th>
-			<th>
-				@Html.DisplayNameFor(model => model.InterestedGigs[0].Date)
-			</th>
-			<th>
-				@Html.DisplayNameFor(model => model.InterestedGigs[0].Venue)
-			</th>
-			<th>
-				@Html.DisplayNameFor(model => model.InterestedGigs[0].Price)
-			</th>
-			<th>
-				@Html.DisplayNameFor(model => model.InterestedGigs[0].Profile)
-			</th>
-			<th></th>
-		</tr>
-	</thead>
-	<tbody>
-		@foreach (var item in Model.InterestedGigs)
-		{
-			<tr>
-				<td>
-					@Html.DisplayFor(modelItem => item.Band)
-				</td>
-				<td>
-					@Html.DisplayFor(modelItem => item.Date)
-				</td>
-				<td>
-					@Html.DisplayFor(modelItem => item.Venue)
-				</td>
-				<td>
-					@Html.DisplayFor(modelItem => item.Price)
-				</td>
-				<td>
-					@Html.DisplayFor(modelItem => item.Profile.Displayname)
-				</td>
-				<td>
-					<a asp-controller="Gigs" asp-action="Details" asp-route-id="@item.Id">Details</a>
-				</td>
-			</tr>
-		}
-	</tbody>
-</table>
+<div class="container">
+	<div class="row">
+		<div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
+			<h1>Recommended for you:</h1>
+			@foreach (var item in Model.RecommendedGigs)
+			{
+			<a asp-area="" asp-controller="Gigs" asp-action="Details" asp-route-id="@item.Id" class="gigs">
+				<div id="dashboard" onmouseover="gigOver(this)" Onmouseout="gigOut(this)">
+					<div class="icons">
+						<img src="~/images/microphone.png" width="40px" />
+					</div>
+					<div class="gigs">
+						<h2> @Html.DisplayFor(modelItem => item.Band)</h2>
+					</div>
+					<br />
+					<div class="icons">
+						<img src="~/images/location.png" width="40px" />
+					</div>
+					<div class="gigs">
+						<h2> @Html.DisplayFor(modelItem => item.Venue)</h2>
+					</div>
+					<br />
+					<div class="icons">
+						<img src="~/images/calendar.png" width="40px" />
+					</div>
+					<div class="gigs">
+						<h2> @Html.DisplayFor(modelItem => item.Date)</h2>
+					</div>
+				</div>
+			</a>
+					<br />
+					}
+			</div>
+		<div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
+			<h1>Your interested gigs:</h1>
+			@foreach (var item in Model.InterestedGigs)
+			{
+				<a asp-area="" asp-controller="Gigs" asp-action="Details" asp-route-id="@item.Id" class="gigs">
+					<div id="dashboard" onmouseover="gigOver(this)" Onmouseout="gigOut(this)">
+						<div class="icons">
+							<img src="~/images/microphone.png" width="40px" />
+						</div>
+						<div class="gigs">
+							<h2> @Html.DisplayFor(modelItem => item.Band)</h2>
+						</div>
+						<br />
+						<div class="icons">
+							<img src="~/images/location.png" width="40px" />
+						</div>
+						<div class="gigs">
+							<h2> @Html.DisplayFor(modelItem => item.Venue)</h2>
+						</div>
+						<br />
+						<div class="icons">
+							<img src="~/images/calendar.png" width="40px" />
+						</div>
+						<div class="gigs">
+							<h2> @Html.DisplayFor(modelItem => item.Date)</h2>
+						</div>
+					</div>
+				</a>
+				<br />
+			}
+		</div>
+	</div>
+</div>
