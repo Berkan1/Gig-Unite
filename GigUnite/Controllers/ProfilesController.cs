@@ -90,14 +90,17 @@ namespace GigUnite.Controllers
 			var profile = await _context.Profile
 				.FirstOrDefaultAsync(m => m.UserId == userId);
 
-			var filename = Path.Combine(he.WebRootPath, "images", "profiles", email);
-			using (var fileStream = new FileStream(filename, FileMode.Create))
+			if (file != null)
 			{
-				file.CopyTo(fileStream);
+				var filename = Path.Combine(he.WebRootPath, "images", "profiles", email);
+				using (var fileStream = new FileStream(filename, FileMode.Create))
+				{
+					file.CopyTo(fileStream);
+				}
+
+				profile.ImageURL = email;
+				_context.SaveChanges();
 			}
-			
-			profile.ImageURL = email;
-			_context.SaveChanges();
 
 			return RedirectToAction("MyProfile");
 		}
@@ -143,6 +146,12 @@ namespace GigUnite.Controllers
 			if(ogName != profile.Displayname && CheckNameAvailability(profile.Displayname) == 1)
 			{
 				TempData["Error"] = "This name is already taken";
+				return RedirectToAction(nameof(Edit));
+			}
+
+			if (profile.Dob > DateTime.Now)
+			{
+				TempData["DateError"] = "This is not a valid date of birth";
 				return RedirectToAction(nameof(Edit));
 			}
 

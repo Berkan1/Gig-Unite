@@ -9,62 +9,61 @@
 
 <h4>Gig</h4>
 <hr />
-<div class="row">
-	<div class="col-md-4">
-		<form asp-action="Create">
-			<div asp-validation-summary="ModelOnly" class="text-danger"></div>
-			<div class="form-group">
-				<label asp-for="Band" class="control-label"></label>
-				<input asp-for="Band" class="form-control" />
-				<span asp-validation-for="Band" class="text-danger"></span>
-			</div>
-			<div class="form-group">
-				<label asp-for="Date" class="control-label"></label>
-				<input asp-for="Date" class="form-control" />
-				<span asp-validation-for="Date" class="text-danger"></span>
-			</div>
-			<div class="form-group">
-				<label asp-for="Venue" class="control-label"></label>
-				<input asp-for="Venue" class="form-control" onchange="showMap2()" />
-				<span asp-validation-for="Venue" class="text-danger"></span>
-			</div>
-			<div class="form-group">
-				<label asp-for="Price" class="control-label"></label>
-				<input asp-for="Price" class="form-control" />
-				<span asp-validation-for="Price" class="text-danger"></span>
-			</div>
-			<div class="form-group">
-				<label asp-for="TicketLink" class="control-label"></label>
-				<input asp-for="TicketLink" class="form-control" />
-				<span asp-validation-for="TicketLink" class="text-danger"></span>
-			</div>
-			<div class="form-group">
-				<input type="hidden" asp-for="Views" value=0 readonly />
-			</div>
-			<div class="form-group">
-				<input asp-for="ProfileId" class="form-control" type="hidden" value=@ViewBag.ProfileId readonly />
-			</div>
-			<div class="form-group">
-				<label class="control-label">What genre(s) of music is this event?</label><br />
-				<select name="genres" id="genres" style="width: 200px; height: 150px" multiple>
-					@foreach (string genre in ViewBag.Genres)
-					{
-						<option value=@genre>@genre</option>
-					}
-				</select>
-			</div>
-			<div class="form-group">
-				<input type="submit" value="Create" class="btn btn-primary" />
-			</div>
-		</form>
+<div class="container">
+	<div class="row">
+		<div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
+			<form asp-action="Create">
+				<div asp-validation-summary="ModelOnly" class="text-danger"></div>
+				<div class="form-group">
+					<label asp-for="Band" class="control-label"></label>
+					<input asp-for="Band" class="form-control" />
+					<span asp-validation-for="Band" class="text-danger"></span>
+				</div>
+				<div class="form-group">
+					<label asp-for="Date" class="control-label"></label>
+					<input asp-for="Date" class="form-control" />
+					<span asp-validation-for="Date" class="text-danger"></span>
+					<span class="text-danger">@TempData["DateError"]</span>
+				</div>
+				<div class="form-group">
+					<label asp-for="Venue" class="control-label"></label>
+					<input asp-for="Venue" class="form-control" onchange="showMap2()" />
+					<span asp-validation-for="Venue" class="text-danger"></span>
+					<span class="text-info">If the correct location doesn't appear on the map, please provide more details (e.g. a postcode)</span>
+				</div>
+				<div class="form-group">
+					<label asp-for="Price" class="control-label"></label>
+					<input asp-for="Price" class="form-control" />
+					<span asp-validation-for="Price" class="text-danger"></span>
+				</div>
+				<div class="form-group">
+					<label asp-for="TicketLink" class="control-label"></label>
+					<input asp-for="TicketLink" class="form-control" />
+					<span asp-validation-for="TicketLink" class="text-danger"></span>
+				</div>
+				<div class="form-group">
+					<input type="hidden" asp-for="Views" value=0 readonly />
+				</div>
+				<div class="form-group">
+					<input asp-for="ProfileId" class="form-control" type="hidden" value=@ViewBag.ProfileId readonly />
+				</div>
+				<div class="form-group">
+					<label class="control-label">What genre(s) of music is this event?</label><br />
+					<select name="genres" id="genres" style="width: 200px; height: 150px" multiple>
+						@foreach (string genre in ViewBag.Genres)
+						{
+							<option value=@genre>@genre</option>
+						}
+					</select>
+				</div>
+				<div class="form-group">
+					<input type="submit" value="Create" class="btn btn-primary" /> <a asp-action="Index" class="btn btn-primary">Back to Gigs</a>
+				</div>
+			</form>
+		</div>
+		<div id="map" class="col-xs-6 col-sm-6 col-md-6 col-lg-6"></div>
 	</div>
 </div>
-
-<div>
-	<a asp-action="Index">Back to List</a>
-</div>
-
-<div id="map"></div>
 
 <script src="https://maps.googleapis.com/maps/api/js?key=YOUR_API_KEY&callback=showMap2" async defer></script>
 

@@ -5,7 +5,7 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h1>Index</h1>
+<h1>All Gigs</h1>
 
 <p>
     <a asp-action="Create" class="btn btn-primary">Add Gig</a>
@@ -16,7 +16,7 @@
 			Search: <input type="text" name="search" id="search">
 		</p>
 </div>
-	<table class="table">
+	<table class="table" id="list">
 		<thead>
 			<tr>
 				<th>
@@ -43,7 +43,7 @@
 		<tbody>
 			@foreach (var item in Model)
 			{
-				<tr class="filtered">
+				<tr class="filtered" onclick="location.href='@Url.Action("Details", "Gigs", new { Id = item.Id})'">
 					<td>
 						@Html.DisplayFor(modelItem => item.Band)
 					</td>
@@ -60,12 +60,10 @@
 						@Html.DisplayFor(modelItem => item.Views)
 					</td>
 					<td>
-						<a asp-area="" asp-controller="Profiles" asp-action="Details" asp-route-id="@item.Profile.Displayname">@Html.DisplayFor(modelItem => item.Profile.Displayname)</a>
+						<b><a asp-area="" asp-controller="Profiles" asp-action="Details" asp-route-id="@item.Profile.Displayname">@Html.DisplayFor(modelItem => item.Profile.Displayname)</a></b>
 					</td>
 					<td>
-						<a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
-						<a asp-action="Details" asp-route-id="@item.Id">Details</a> |
-						<a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
+						<a asp-action="Details" asp-route-id="@item.Id" class="btn btn-primary">Details</a>
 					</td>
 				</tr>
 			}

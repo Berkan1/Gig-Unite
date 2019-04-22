@@ -99,7 +99,7 @@ function gigOver(x) {
 } 
 
 function gigOut(x) {
-    x.style.backgroundColor = "#48D7F5";
+    x.style.backgroundColor = "#5A99FC";
 }
 
 function showIt(x) {

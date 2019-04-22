@@ -139,17 +139,32 @@ div.notifications {
 }
 
 div#dashboard {
-	background-color: #48D7F5;
+	background-color: #5A99FC;
+	border-radius: 25px;
 	padding: 10px;
-	border: 1px solid green;
-	display: inline-block;
-	margin-left: 20%;
-	margin-bottom: 30px;
+	border: 2px solid #000000;
+	display: table;
+	margin: 0 auto;
+	margin-bottom: 25px;
+}
+
+div#dashboard:hover,
+div#dashboard:focus {
+	animation: transition 1s;
+	box-shadow: 10px 10px 30px rgba(0, 0, 0, 0.5);
+	transform: translateY(-0.25em);
+}
+
+@keyframes transition {
+	0% {
+		box-shadow: 0 0 0 0 var(--hover);
+	}
 }
 
 div.icons {
 	display: inline-block;
 	vertical-align: top;
+	padding-right: 10px;
 }
 
 div.gigs {
@@ -173,4 +188,23 @@ div#hidden {
 a.gigs {
 	color: #000000;
 	text-decoration: none !important;
+}
+
+#list th {
+	background-color: #5A99FC;
+}
+
+#list tr:nth-child(even) {
+	background-color: #E8F1FF;
+}
+
+#list tr:nth-child(odd) {
+	background-color: #FFFFFF;
+}
+
+#list tr:hover {
+	background-color: #BCD5FD;
+}
+.filtered {
+	cursor: pointer;
 }

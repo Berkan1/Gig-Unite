@@ -203,7 +203,14 @@ namespace GigUnite.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create([Bind("Id,Band,Date,Venue,Price,TicketLink,Views,ProfileId")] Gig gig, List<string> genres)
         {
-            if (ModelState.IsValid)
+
+			if (gig.Date <= DateTime.Now)
+			{
+				TempData["DateError"] = "Gig dates must be in the future";
+				return RedirectToAction(nameof(Create));
+			}
+
+			if (ModelState.IsValid)
             {
                 _context.Add(gig);
                 await _context.SaveChangesAsync();
