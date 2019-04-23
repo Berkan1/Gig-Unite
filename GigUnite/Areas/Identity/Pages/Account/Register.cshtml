@@ -37,6 +37,18 @@
 				<input type="date" name="dob" class="form-control" />
 				<span class="text-danger">@ViewData["DateError"]</span>
 			</div>
+			<div class="form-group">
+				<div class="checkbox">
+					<label><input type="checkbox" name="terms" id="terms" /> I agree to the <a asp-area="" asp-controller="Home" asp-action="Terms">Terms and Conditions</a> 
+					and <a asp-area="" asp-controller="Home" asp-action="Terms">Privacy Policy</a></label>
+					<span class="text-danger">@ViewData["TermsError"]</span>
+				</div>
+			</div>
+			<div class="form-group">
+				<div class="checkbox">
+					<label><input type="checkbox" name="optin" id="optin" /> I wish to opt in to email notifications about gigs recommended to me</label>
+				</div>
+			</div>
 			<button type="submit" class="btn btn-primary">Register</button>
 		</form>
     </div>

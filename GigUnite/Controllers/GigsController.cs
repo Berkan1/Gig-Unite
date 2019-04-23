@@ -226,26 +226,37 @@ namespace GigUnite.Controllers
 				var profile = await _context.Profile
 				.FirstOrDefaultAsync(m => m.Id == gig.ProfileId);
 
-				var recipients = GetEmailList(gig.Band, genres);
+				var currentUser = await _context.Users
+				.FirstOrDefaultAsync(m => m.Id == profile.UserId);
 
-				var message = new MimeMessage();
-				message.From.Add(new MailboxAddress("GigUnite", "gigunite@hotmail.com"));
-				foreach (var recipient in recipients)
+				var recipients = GetEmailList(gig.Band, genres);
+				recipients.Remove(currentUser.Email);
+
+				if(recipients.Count > 0)
 				{
-					message.Bcc.Add(new MailboxAddress(recipient));
-				}
-				message.Subject = "New Gig Advert for " + gig.Band;
-				message.Body = new TextPart("plain")
-				{
-					Text = "Hi! A new gig advert was posted by " + profile.Displayname + " with the following details: \r\n \r\n Artist/Band: " + gig.Band +
-						   "\r\n Date: " + gig.Date.ToString("dd/MM/yyyy") + "\r\n Venue: " + gig.Venue + "\r\n Price: " + gig.Price + "\r\n Genres: " + gigGenres
-				};
-				using (var client = new SmtpClient())
-				{
-					client.Connect("smtp.live.com", 587, false);
-					client.Authenticate("gigunite@hotmail.com", "PASSWORD");
-					client.Send(message);
-					client.Disconnect(true);
+					string url = $"{this.Request.Scheme}://{this.Request.Host}{this.Request.PathBase}/Identity/Account/Manage";
+
+					var message = new MimeMessage();
+					message.From.Add(new MailboxAddress("GigUnite", "gigunite@hotmail.com"));
+					foreach (var recipient in recipients)
+					{
+						message.Bcc.Add(new MailboxAddress(recipient));
+					}
+					message.Subject = "New Gig Advert for " + gig.Band;
+
+					var bodyBuilder = new BodyBuilder();
+					bodyBuilder.HtmlBody = "Hi! A new gig advert was posted by " + profile.Displayname + " with the following details: <br /><br /> Artist/Band: " + gig.Band +
+							   "<br /> Date: " + gig.Date.ToString("dd/MM/yyyy") + "<br /> Venue: " + gig.Venue + "<br /> Price: £" + gig.Price + "<br /> Genres: " + gigGenres +
+							   "<br /><br /> <a href='" + url + "'>Unsubscribe</a>";
+
+					message.Body = bodyBuilder.ToMessageBody();
+					using (var client = new SmtpClient())
+					{
+						client.Connect("smtp.live.com", 587, false);
+						client.Authenticate("gigunite@hotmail.com", "PASSWORD");
+						client.Send(message);
+						client.Disconnect(true);
+					}
 				}
 
 				return RedirectToAction(nameof(Index));

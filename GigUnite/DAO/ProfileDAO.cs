@@ -10,16 +10,17 @@ namespace GigUnite.DAO
 {
 	public static class ProfileDAO
 	{
-		public static int CreateProfile(string displayname, DateTime dob, string userId)
+		public static int CreateProfile(string displayname, DateTime dob, string userId, string optin)
 		{
 			Profile data = new Profile
 			{
 				Displayname = displayname,
 				Dob = dob,
-				UserId = userId
+				UserId = userId,
+				Optin = optin
 			};
 
-			string sql = @"INSERT INTO dbo.Profile (Displayname, Dob, UserId) VALUES (@Displayname, @Dob, @UserId);";
+			string sql = @"INSERT INTO dbo.Profile (Displayname, Dob, UserId, Optin) VALUES (@Displayname, @Dob, @UserId, @Optin);";
 
 			return SqlDataAccess.SaveData(sql, data);
 		}
@@ -64,6 +65,20 @@ namespace GigUnite.DAO
 			string sql4 = @"DELETE FROM dbo.Interest WHERE UserId = @UserId;";
 
 			return SqlDataAccess.Delete(sql, sql2, sql3, sql4, userId);
+		}
+
+		public static string OptedIn(string userId)
+		{
+			string sql = @"SELECT Optin FROM dbo.Profile WHERE UserId = @UserId";
+
+			return SqlDataAccess.OptedIn(sql, userId);
+		}
+
+		public static void OptIn(string optin, string userId)
+		{
+			string sql = @"UPDATE dbo.Profile SET Optin = @Optin WHERE UserId = @UserId";
+			
+			SqlDataAccess.OptIn(sql, optin, userId);
 		}
 	}
 }

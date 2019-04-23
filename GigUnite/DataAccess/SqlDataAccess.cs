@@ -573,5 +573,57 @@ namespace GigUnite.DataAccess
 				}
 			}
 		}
+
+		public static string OptedIn(string sql, string userId)
+		{
+			using (SqlConnection cnn = new SqlConnection(connect))
+			{
+				SqlCommand command = new SqlCommand(sql, cnn);
+				command.Parameters.Add("@UserId", SqlDbType.NVarChar);
+				command.Parameters["@UserId"].Value = userId;
+				string result = "off";
+
+				try
+				{
+					cnn.Open();
+					SqlDataReader reader = command.ExecuteReader();
+
+					while (reader.Read())
+					{
+						result = (string)reader["Optin"];
+					}
+					cnn.Close();
+				}
+				catch (Exception ex)
+				{
+					throw ex;
+				}
+
+				return result;
+			}
+		}
+
+		public static void OptIn(string sql, string optin, string userId)
+		{
+			using (SqlConnection cnn = new SqlConnection(connect))
+			{
+				SqlCommand command = new SqlCommand(sql, cnn);
+				command.Parameters.Add("@Optin", SqlDbType.NVarChar);
+				command.Parameters["@Optin"].Value = optin;
+				command.Parameters.Add("@UserId", SqlDbType.NVarChar);
+				command.Parameters["@UserId"].Value = userId;
+
+				try
+				{
+					cnn.Open();
+					command.ExecuteNonQuery();
+					cnn.Close();
+				}
+				catch (Exception ex)
+				{
+					throw ex;
+				}
+			}
+		}
 	}
 }

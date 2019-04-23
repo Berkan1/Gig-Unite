@@ -141,7 +141,7 @@ namespace GigUnite.Controllers
 		// more details see http://go.microsoft.com/fwlink/?LinkId=317598.
 		[HttpPost]
 		[ValidateAntiForgeryToken]
-		public async Task<IActionResult> Edit([Bind("Id,Displayname,Dob,Bio,ImageURL,Band1,Band2,Band3,Band4,Band5,UserId")] Profile profile, List<string> genres, string ogName)
+		public async Task<IActionResult> Edit([Bind("Id,Displayname,Dob,Bio,ImageURL,Band1,Band2,Band3,Band4,Band5,UserId,Optin")] Profile profile, List<string> genres, string ogName)
 		{
 			if(ogName != profile.Displayname && CheckNameAvailability(profile.Displayname) == 1)
 			{

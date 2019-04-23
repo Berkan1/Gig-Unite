@@ -32,25 +32,6 @@ namespace GigUnite.Controllers
             return View(await applicationDbContext.ToListAsync());
         }
 
-        // GET: Reports/Details/5
-        public async Task<IActionResult> Details(int? id)
-        {
-            if (id == null)
-            {
-                return NotFound();
-            }
-
-            var report = await _context.Report
-                .Include(r => r.Profile)
-                .FirstOrDefaultAsync(m => m.Id == id);
-            if (report == null)
-            {
-                return NotFound();
-            }
-
-            return View(report);
-        }
-
 		[AllowAnonymous]
 		// GET: Reports/Create
 		public async Task<IActionResult> Create(int profileId)
@@ -86,9 +67,15 @@ namespace GigUnite.Controllers
 			return RedirectToAction("Dashboard", "Home");
 		}
 
-		public IActionResult Deactivate(int profileId)
+		public async Task<IActionResult> Deactivate(int profileId)
 		{
-			DeleteUser(profileId);
+			var profile = await _context.Profile
+				.FirstOrDefaultAsync(m => m.Id == profileId);
+
+			var user = await _context.Users
+				.FirstOrDefaultAsync(m => m.Id == profile.UserId);
+
+			DeleteUser(profileId, user.Id);
 
 			return RedirectToAction(nameof(Index));
 		}

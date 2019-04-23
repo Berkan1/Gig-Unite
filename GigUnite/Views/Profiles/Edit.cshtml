@@ -15,7 +15,7 @@
 					<label asp-for="Displayname" class="control-label"></label>
 					<input asp-for="Displayname" class="form-control" />
 					<span asp-validation-for="Displayname" class="text-danger"></span>
-					<span class="text-danger">@TempData["Error"]</span>
+					<span class="text-dark">@TempData["Error"]</span>
 				</div>
 			</div>
 			<div class="col-sx-6 col-sm-6 col-md-3 col-lg-3">
@@ -23,7 +23,7 @@
 					<label asp-for="Dob" class="control-label"></label>
 					<input asp-for="Dob" class="form-control" />
 					<span asp-validation-for="Dob" class="text-danger"></span>
-					<span class="text-danger">@TempData["DateError"]</span>
+					<span class="text-dark">@TempData["DateError"]</span>
 				</div>
 			</div>
 		</div>
@@ -119,20 +119,21 @@
 				</div>
 			</div>
 		</div>
-		<input type="hidden" asp-for="Id" readonly/>
-		<input type="hidden" asp-for="UserId" readonly/>
-		<input type="hidden" asp-for="ImageURL" readonly/>
-		<input type="hidden" name="ogName" value="@ViewBag.OgName" readonly/>
+		<input type="hidden" asp-for="Id" readonly />
+		<input type="hidden" asp-for="UserId" readonly />
+		<input type="hidden" asp-for="ImageURL" readonly />
+		<input type="hidden" asp-for="Optin" readonly />
+		<input type="hidden" name="ogName" value="@ViewBag.OgName" readonly />
 
 		<div class="form-group">
 			<input type="submit" value="Save" class="btn btn-primary" />
 		</div>
+
+		<div>
+			<a asp-action="MyProfile" class="btn btn-primary">Back to my profile</a>
+		</div>
 	</div>
 </form>
-
-<div>
-	<a asp-action="MyProfile" class="btn btn-primary">Back to my profile</a>
-</div>
 
 @section Scripts {
 	@{await Html.RenderPartialAsync("_ValidationScriptsPartial");}

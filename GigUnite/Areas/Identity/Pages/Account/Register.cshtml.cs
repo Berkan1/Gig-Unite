@@ -62,8 +62,18 @@ namespace GigUnite.Areas.Identity.Pages.Account
             ReturnUrl = returnUrl;
         }
 
-		public async Task<IActionResult> OnPostAsync(string returnUrl = null, string displayname = null, string dob = null)
+		public async Task<IActionResult> OnPostAsync(string returnUrl = null, string displayname = null, string dob = null, string terms = null, string optin = null)
         {
+			if (terms != "on")
+			{
+				ViewData["TermsError"] = "You need to agree to the Terms and Conditions and Privacy Policy to create an account";
+				return Page();
+			}
+
+			if (optin != "on")
+			{
+				optin = "off";
+			}
 
 			if (CheckNameAvailability(displayname) == 1)
 			{
@@ -96,7 +106,7 @@ namespace GigUnite.Areas.Identity.Pages.Account
                         values: new { userId = user.Id, code = code },
                         protocol: Request.Scheme);
 
-					CreateProfile(displayname, newdob, user.Id);
+					CreateProfile(displayname, newdob, user.Id, optin);
 
 					await _emailSender.SendEmailAsync(Input.Email, "Confirm your email",
                         $"Please confirm your account by <a href='{HtmlEncoder.Default.Encode(callbackUrl)}'>clicking here</a>.");

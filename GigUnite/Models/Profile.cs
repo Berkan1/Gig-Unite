@@ -29,6 +29,7 @@ namespace GigUnite.Models
 		public string Band5 { get; set; }
 		public string ImageURL { get; set; }
 		public string UserId { get; set; }
+		public string Optin { get; set; }
 
 		public virtual ICollection<Gig> Gigs { get; set; }
 		public virtual ICollection<ProfileGenre> ProfileGenres { get; set; }

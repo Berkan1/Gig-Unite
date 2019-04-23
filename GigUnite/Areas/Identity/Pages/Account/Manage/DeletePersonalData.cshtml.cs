@@ -68,18 +68,11 @@ namespace GigUnite.Areas.Identity.Pages.Account.Manage
             }
 
 			int profileId = GetProfileId(_userManager.GetUserId(User));
-			DeleteUser(profileId);
-
-			var result = await _userManager.DeleteAsync(user);
-            var userId = await _userManager.GetUserIdAsync(user);
-            if (!result.Succeeded)
-            {
-                throw new InvalidOperationException($"Unexpected error occurred deleteing user with ID '{userId}'.");
-            }
+			DeleteUser(profileId, user.Id);
 
             await _signInManager.SignOutAsync();
 
-            _logger.LogInformation("User with ID '{UserId}' deleted themselves.", userId);
+            _logger.LogInformation("User with ID '{UserId}' deleted themselves.", user.Id);
 
             return Redirect("~/");
         }

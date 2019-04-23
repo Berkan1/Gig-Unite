@@ -24,7 +24,7 @@ namespace GigUnite.DAO
 			return SqlDataAccess.GetId(sql, name);
 		}
 
-			public static void DeleteUser(int profileId)
+			public static void DeleteUser(int profileId, string userId)
 		{
 			string sql = @"DELETE FROM dbo.Report WHERE ProfileId = @ProfileId;";
 			string sql2 = @"DELETE FROM dbo.ProfileGenre WHERE ProfileId = @ProfileId;";
@@ -32,13 +32,15 @@ namespace GigUnite.DAO
 			string sql4 = @"DELETE FROM dbo.Gig WHERE ProfileId = @ProfileId;";
 			string sql5 = @"DELETE FROM dbo.Profile WHERE Id = @ProfileId;";
 			string sql6 = @"DELETE FROM dbo.Comment WHERE UserId = @ProfileId;";
-			
+			string sql7 = @"DELETE FROM dbo.AspNetUsers WHERE Id = @ProfileId;";
+
 			SqlDataAccess.DeleteUser(sql, profileId);
 			SqlDataAccess.DeleteUser(sql2, profileId);
 			SqlDataAccess.DeleteUser(sql3, profileId);
 			SqlDataAccess.DeleteUser(sql4, profileId);
 			SqlDataAccess.DeleteUser(sql5, profileId);
 			SqlDataAccess.DeleteUser(sql6, profileId);
+			SqlDataAccess.DeleteUser(sql7, userId);
 		}
 
 		public static Boolean IsBanned(string email)

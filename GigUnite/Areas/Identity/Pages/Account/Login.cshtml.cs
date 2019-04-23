@@ -75,10 +75,6 @@ namespace GigUnite.Areas.Identity.Pages.Account
                 // This doesn't count login failures towards account lockout
                 // To enable password failures to trigger account lockout, set lockoutOnFailure: true
                 var result = await _signInManager.PasswordSignInAsync(Input.Email, Input.Password, Input.RememberMe, lockoutOnFailure: true);
-				if (IsBanned(Input.Email)){
-					_logger.LogWarning("User account locked out.");
-					return RedirectToPage("./Lockout");
-				}
                 if (result.Succeeded)
                 {
                     _logger.LogInformation("User logged in.");
@@ -87,16 +83,6 @@ namespace GigUnite.Areas.Identity.Pages.Account
                 if (result.RequiresTwoFactor)
                 {
                     return RedirectToPage("./LoginWith2fa", new { ReturnUrl = returnUrl, RememberMe = Input.RememberMe });
-                }
-                if (result.IsLockedOut)
-                {
-                    _logger.LogWarning("User account locked out.");
-                    return RedirectToPage("./Lockout");
-                }
-                else
-                {
-                    ModelState.AddModelError(string.Empty, "Invalid login attempt.");
-                    return Page();
                 }
             }
 
