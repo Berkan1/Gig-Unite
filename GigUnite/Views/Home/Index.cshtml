@@ -1,4 +1,4 @@
-﻿@model GigUnite.Models.Gig
+﻿@model IEnumerable<GigUnite.Models.Gig>
 
 @{
 	ViewData["Title"] = "Welcome";
@@ -23,30 +23,33 @@
 				<li class="medium">Contribute to our community! Post your own gig adverts, join in on discussion boards for gigs, and tell us which gigs you're going to!</li>
 			</ol>
 		</div>
-		<div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
-			<h2>Here's our most recently added gig:</h2>
-			<div id="dashboard" onmouseover="gigOver(this)" Onmouseout="gigOut(this)">
-				<div class="icons">
-					<img src="~/images/microphone.png" width="40px" />
-				</div>
-				<div class="gigs">
-					<h2>@Html.DisplayFor(model => model.Band)</h2>
-				</div>
-				<br />
-				<div class="icons">
-					<img src="~/images/location.png" width="40px" />
-				</div>
-				<div class="gigs">
-					<h2>@Html.DisplayFor(model => model.Venue)</h2>
-				</div>
-				<br />
-				<div class="icons">
-					<img src="~/images/calendar.png" width="40px" />
-				</div>
-				<div class="gigs">
-					<h2>@Html.DisplayFor(model => model.Date)</h2>
+		@foreach (var item in Model)
+		{
+			<div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
+				<h2>Here's our most recently added gig:</h2>
+				<div id="dashboard" onmouseover="gigOver(this)" Onmouseout="gigOut(this)">
+					<div class="icons">
+						<img src="~/images/microphone.png" width="40px" />
+					</div>
+					<div class="gigs">
+						<h2>@Html.DisplayFor(modelItem => item.Band)</h2>
+					</div>
+					<br />
+					<div class="icons">
+						<img src="~/images/red-marker.png" width="40px" />
+					</div>
+					<div class="gigs">
+						<h2>@Html.DisplayFor(modelItem => item.Venue)</h2>
+					</div>
+					<br />
+					<div class="icons">
+						<img src="~/images/calendar.png" width="40px" />
+					</div>
+					<div class="gigs">
+						<h2>@Html.DisplayFor(modelItem => item.Date)</h2>
+					</div>
 				</div>
 			</div>
-		</div>
+		}
 	</div>
 </div>

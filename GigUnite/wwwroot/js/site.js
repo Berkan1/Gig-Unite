@@ -166,7 +166,7 @@ function createMarker(place) {
     var marker = new google.maps.Marker({
         map: map,
         position: place.geometry.location,
-        icon: 'http://maps.google.com/mapfiles/ms/icons/green-dot.png'
+        icon: '/images/blue-marker-small.png'
     });
 
     google.maps.event.addListener(marker, 'click', function () {

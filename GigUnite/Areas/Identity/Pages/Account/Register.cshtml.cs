@@ -75,6 +75,12 @@ namespace GigUnite.Areas.Identity.Pages.Account
 				optin = "off";
 			}
 
+			if (displayname == null || displayname == "")
+			{
+				ViewData["Error"] = "Please enter a display name";
+				return Page();
+			}
+
 			if (CheckNameAvailability(displayname) == 1)
 			{
 				ViewData["Error"] = "This display name is already taken";
@@ -87,6 +93,23 @@ namespace GigUnite.Areas.Identity.Pages.Account
 			if (newdob > DateTime.Now)
 			{
 				ViewData["DateError"] = "This is not a valid date of birth";
+				return Page();
+			}
+
+			int years = DateTime.Now.Year - newdob.Year;
+			
+			if (DateTime.Now.Month < newdob.Month)
+			{
+				years = years - 1;
+			}
+			if (DateTime.Now.Month == newdob.Month && DateTime.Now.Day < newdob.Day)
+			{
+				years = years - 1;
+			}
+
+			if (years < 18)
+			{
+				ViewData["DateError"] = "You must be at least 18 years old to create an account";
 				return Page();
 			}
 

@@ -36,7 +36,15 @@ namespace GigUnite.Controllers
 				var gigs = from m in _context.Gig 
 						   select m;
 
-				return View(gigs.Last());
+				var recentGig = new List<Gig>();
+
+				foreach (var gig in gigs)
+				{
+					recentGig.Clear();
+					recentGig.Add(gig);
+				}
+
+				return View(gigs);
 			}
 		}
 
