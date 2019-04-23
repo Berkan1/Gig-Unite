@@ -33,7 +33,10 @@ namespace GigUnite.Controllers
 			}
 			else
 			{
-				return View();
+				var gigs = from m in _context.Gig 
+						   select m;
+
+				return View(gigs.Last());
 			}
 		}
 
@@ -92,6 +95,14 @@ namespace GigUnite.Controllers
 			};
 
 			return View(dashboardModel);
+		}
+
+		public IActionResult Terms()
+		{
+			string url = $"{this.Request.Scheme}://{this.Request.Host}{this.Request.PathBase}";
+
+			ViewBag.Url = url;
+			return View();
 		}
 
 		[ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]

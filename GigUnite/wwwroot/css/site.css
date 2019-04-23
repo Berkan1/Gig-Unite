@@ -61,6 +61,10 @@ h1 {
 	text-align: center;
 }
 
+h2.home {
+	color: #007BFF;
+}
+
 span.tags {
 	border-style: solid;
 	border-color: #000000;

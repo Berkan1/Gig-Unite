@@ -1,7 +1,52 @@
-﻿@{
-	ViewData["Title"] = "Home Page";
+﻿@model GigUnite.Models.Gig
+
+@{
+	ViewData["Title"] = "Welcome";
+	Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<div class="text-center">
-	<h1 class="display-4">Welcome</h1>
+<div>
+	<h1>@ViewData["Title"]</h1>
+</div>
+
+<h2>What is GigUnite?</h2>
+<p class="medium">Is there a gig you want to go to but have no-one to go with? GigUnite is here to help! Join our community and you'll be able to find gig buddies in no time!</p><br />
+
+<div class="container">
+	<div class="row">
+		<div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
+			<h2>How does it work?</h2>
+			<ol>
+				<li class="medium">Create an account by clicking the 'Register' button in the top right corner</li>
+				<li class="medium">Create a profile, tell us about your interests, favourite music genres and favourite bands!</li>
+				<li class="medium">Browse our collection of gigs, and the gigs we recommend to you</li>
+				<li class="medium">Contribute to our community! Post your own gig adverts, join in on discussion boards for gigs, and tell us which gigs you're going to!</li>
+			</ol>
+		</div>
+		<div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
+			<h2>Here's our most recently added gig:</h2>
+			<div id="dashboard" onmouseover="gigOver(this)" Onmouseout="gigOut(this)">
+				<div class="icons">
+					<img src="~/images/microphone.png" width="40px" />
+				</div>
+				<div class="gigs">
+					<h2>@Html.DisplayFor(model => model.Band)</h2>
+				</div>
+				<br />
+				<div class="icons">
+					<img src="~/images/location.png" width="40px" />
+				</div>
+				<div class="gigs">
+					<h2>@Html.DisplayFor(model => model.Venue)</h2>
+				</div>
+				<br />
+				<div class="icons">
+					<img src="~/images/calendar.png" width="40px" />
+				</div>
+				<div class="gigs">
+					<h2>@Html.DisplayFor(model => model.Date)</h2>
+				</div>
+			</div>
+		</div>
+	</div>
 </div>
